@@ -18,11 +18,12 @@ const animationStepsData = [
       <>
         <Type size={32} className="mb-2 opacity-60 text-blue-500/80 animate-icon-pulse" />
         <p
-            className="text-xs text-muted-foreground animate-typewriter"
+            className="text-xs text-muted-foreground animate-typewriter-text"
             style={{
               fontFamily: 'monospace',
-              animation: `typewriter 2s steps(28, end) infinite`,
-              display: 'inline-block',
+              animationDuration: '2s, 0.75s', // duration for typewriter, duration for blink
+              animationIterationCount: 'infinite, infinite',
+              animationTimingFunction: 'steps(28, end), step-end',
             }}
         >
             Enter title &amp; description...
@@ -61,7 +62,7 @@ const animationStepsData = [
   },
   {
     id: 'save',
-    title: '3. Review & Save', // Fixed &amp; to &
+    title: '3. Review &amp; Save',
     icon: Save,
     bgColorStops: 'from-green-500/10 via-green-500/5 to-transparent',
     iconColor: 'text-green-500',
@@ -69,7 +70,7 @@ const animationStepsData = [
     ringColor: 'ring-green-500/20',
     elements: (
       <>
-        <CheckCircle size={36} className="mb-1.5 text-green-500 animate-icon-confirm-pop" style={{animationDelay: '0.1s'}}/>
+        <CheckCircle size={36} className="mb-1.5 text-green-500 animate-tick-emphasis" style={{animationDelay: '0.1s'}}/>
         <p className="text-xs text-muted-foreground animate-text-focus-in" style={{animationDelay: '0.3s'}}>Your story is ready!</p>
         <p className="text-xs text-muted-foreground animate-text-focus-in" style={{animationDelay: '0.5s'}}>Save it to your collection.</p>
       </>
@@ -118,4 +119,3 @@ export function HowItWorksAnimation() {
     </div>
   );
 }
-

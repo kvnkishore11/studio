@@ -154,9 +154,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes typewriter {
-  from { width: 0; }
-  to { width: 100%; }
+  from { width: 0; opacity: 0;}
+  to { width: 100%; opacity: 1;}
 }
+@keyframes typewriter-cursor-blink {
+  0%, 100% { border-right-color: transparent; }
+  50% { border-right-color: hsl(var(--foreground)); }
+}
+
 
 /* Icon specific animations */
 @keyframes icon-pulse { /* Subtle pulse for icons */
@@ -195,13 +200,16 @@ h1, h2, h3, h4, h5, h6 {
   animation: ai-progress-bar 1.5s ease-in-out infinite;
 }
 
-@keyframes icon-confirm-pop {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.15); }
+@keyframes tick-emphasis {
+  0% { transform: scale(0.8) rotate(-10deg); opacity: 0.7; }
+  30% { transform: scale(1.1) rotate(5deg); opacity: 1; }
+  60% { transform: scale(0.9) rotate(-5deg); opacity: 1;}
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
-.animate-icon-confirm-pop {
-  animation: icon-confirm-pop 1.2s ease-in-out infinite;
+.animate-tick-emphasis {
+  animation: tick-emphasis 1.5s ease-in-out infinite;
 }
+
 
 @keyframes text-focus-in {
   0% {
@@ -254,12 +262,14 @@ h1, h2, h3, h4, h5, h6 {
   animation: rotate 2.5s linear infinite; /* Slower for less distraction */
 }
 
-.animate-typewriter {
+.animate-typewriter-text {
   overflow: hidden;
   white-space: nowrap;
-  width: 0; /* Initial width before animation starts */
-  /* Animation: typewriter [duration] steps([char_count], end) [delay] [iteration-count] */
-  /* Example: animation: typewriter 2s steps(20, end) infinite; */
+  display: inline-block; /* Important for width animation to work correctly */
+  vertical-align: bottom; /* Aligns with other inline elements if any */
+  animation: typewriter 2s steps(28, end) infinite, 
+             typewriter-cursor-blink .75s step-end infinite;
+  border-right: 2px solid hsl(var(--foreground)); /* Cursor */
 }
 
 
