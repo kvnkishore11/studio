@@ -9,6 +9,10 @@ export default {
   ],
   theme: {
   	extend: {
+      fontFamily: {
+        manrope: ['var(--font-manrope)', 'sans-serif'],
+        'dm-sans': ['var(--font-dm-sans)', 'sans-serif'],
+      },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -64,7 +68,9 @@ export default {
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
+  			sm: 'calc(var(--radius) - 4px)',
+        xl: 'calc(var(--radius) + 4px)', // Added for more rounded elements
+        '2xl': 'calc(var(--radius) + 8px)', // Added for more rounded elements
   		},
   		keyframes: {
   			'accordion-down': {
@@ -82,11 +88,27 @@ export default {
   				to: {
   					height: '0'
   				}
-  			}
+  			},
+        // Copied animations from globals.css to ensure Tailwind can use them if needed with animate-*
+        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+        fadeOut: { '0%': { opacity: '1' }, '100%': { opacity: '0' } },
+        slideInUp: { '0%': { opacity: '0', transform: 'translateY(30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+        slideInLeft: { '0%': { opacity: '0', transform: 'translateX(-30px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
+        slideInRight: { '0%': { opacity: '0', transform: 'translateX(30px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
+        zoomIn: { '0%': { opacity: '0', transform: 'scale(0.95)' }, '100%': { opacity: '1', transform: 'scale(1)' } },
+        rotate: { from: { transform: 'rotate(0deg)' }, to: { transform: 'rotate(360deg)' } },
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+        // Added animations for Tailwind utility classes
+        fadeIn: 'fadeIn 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards',
+        fadeOut: 'fadeOut 0.3s cubic-bezier(0.215, 0.61, 0.355, 1) forwards',
+        slideInUp: 'slideInUp 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards',
+        slideInLeft: 'slideInLeft 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards',
+        slideInRight: 'slideInRight 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards',
+        zoomIn: 'zoomIn 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards',
+        rotate: 'rotate 2s linear infinite',
   		}
   	}
   },

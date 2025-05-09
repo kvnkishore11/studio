@@ -1,14 +1,14 @@
-// src/app/page.tsx
+// src/app/history/page.tsx
 import { StorySparkApp } from "@/components/story-spark-app";
-import { GenerateStoryView } from "@/components/views/generate-story-view";
+import { HistoryView } from "@/components/views/history-view";
 import { AppLoader } from "@/components/loader";
 import { Suspense } from "react";
 
-export default function HomePage() {
+export default function HistoryPage() {
   return (
     <StorySparkApp>
       <Suspense fallback={<AppLoader />}>
-        <GenerateStoryView />
+        <HistoryView />
       </Suspense>
     </StorySparkApp>
   );
