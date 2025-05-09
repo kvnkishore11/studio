@@ -1,18 +1,19 @@
+
 // src/components/views/saved-stories-view.tsx
 "use client";
 
 import { useState } from 'react';
-import { Plus, Filter, ChevronDown, Copy, Edit3, Trash2 } from 'lucide-react';
+import { Plus, Filter, ChevronDown, Copy, Edit3, Trash2, BookOpen, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useApp } from '@/hooks/use-app';
 import type { SavedStory } from '@/types/story';
-import { SearchIcon } from '@/components/icons/search-icon'; // Assuming you create this
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 type SortOrder = 'newest' | 'oldest' | 'priority';
 type PriorityFilter = 'all' | 'High' | 'Medium' | 'Low';
@@ -42,139 +43,149 @@ export function SavedStoriesView() {
     return 0;
   });
 
-  const getPriorityBadgeVariant = (priority: string): "default" | "secondary" | "destructive" | "outline" => {
-    if (priority === 'High') return 'destructive';
-    if (priority === 'Medium') return 'default'; // Default is primary, using for Medium
-    return 'secondary'; // For Low
-  };
-  
   const getPriorityBadgeClass = (priority: string): string => {
+    let baseClass = "px-2.5 py-0.5 text-xs font-semibold rounded-full border ";
     if (themeMode === 'dark') {
-        if (priority === 'High') return 'bg-red-700/30 text-red-300 border-red-700/50';
-        if (priority === 'Medium') return 'bg-amber-700/30 text-amber-300 border-amber-700/50';
-        return 'bg-emerald-700/30 text-emerald-300 border-emerald-700/50';
+        if (priority === 'High') return baseClass + 'bg-red-500/20 text-red-300 border-red-500/40';
+        if (priority === 'Medium') return baseClass + 'bg-amber-500/20 text-amber-300 border-amber-500/40';
+        return baseClass + 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40';
     }
-    if (priority === 'High') return 'bg-red-100 text-red-700 border-red-200';
-    if (priority === 'Medium') return 'bg-amber-100 text-amber-700 border-amber-200';
-    return 'bg-emerald-100 text-emerald-700 border-emerald-200';
+    if (priority === 'High') return baseClass + 'bg-red-100 text-red-700 border-red-300';
+    if (priority === 'Medium') return baseClass + 'bg-amber-100 text-amber-700 border-amber-300';
+    return baseClass + 'bg-emerald-100 text-emerald-700 border-emerald-300';
   };
 
 
   return (
     <div className="animate-fadeIn">
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Saved Stories</h1>
-          <p className="mt-1 text-muted-foreground">
-            {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
-          </p>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 md:mb-10 gap-4">
+        <div className="flex items-center">
+            <div className="p-3 rounded-xl mr-4 bg-primary/10 shadow-md">
+                 <BookOpen size={28} className="text-primary" />
+            </div>
+            <div>
+                <h1 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">Saved Stories</h1>
+                <p className="mt-1 text-muted-foreground">
+                    Manage and review your collection of generated user stories.
+                </p>
+            </div>
         </div>
-        <div className="flex items-center space-x-3 w-full md:w-auto">
-           <Badge variant="secondary" className="px-3 py-1.5 text-sm">
-              {savedStories.length} stories
+        <div className="flex items-center space-x-3 w-full md:w-auto self-start md:self-center">
+           <Badge variant="outline" className="px-3 py-1.5 text-sm border-primary/50 text-primary bg-primary/5">
+              {sortedStories.length} storie{sortedStories.length === 1 ? '' : 's'}
             </Badge>
         </div>
       </div>
       
-      <div className="mb-8 flex flex-col md:flex-row gap-4">
-        <div className="flex-grow">
-            <Input 
-                type="search" 
-                placeholder="Search by title or content..."
-                className="h-10"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-            />
+      <Card className="mb-8 md:mb-10 p-4 md:p-6 shadow-sm">
+        <div className="flex flex-col md:flex-row gap-3 md:gap-4">
+            <div className="flex-grow relative">
+                <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <Input 
+                    type="search" 
+                    placeholder="Search by title, content, or notes..."
+                    className="h-10 pl-10 text-base" // Ensure text is readable
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+            </div>
+            <div className="flex gap-2 sm:gap-3 items-center w-full md:w-auto">
+                <Select value={activePriorityFilter} onValueChange={(value) => setActivePriorityFilter(value as PriorityFilter)}>
+                    <SelectTrigger className="w-full md:w-[170px] h-10 text-sm">
+                        <Filter size={15} className="mr-2 opacity-70" />
+                        <SelectValue placeholder="Filter by priority" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="all">All Priorities</SelectItem>
+                        <SelectItem value="High">High Priority</SelectItem>
+                        <SelectItem value="Medium">Medium Priority</SelectItem>
+                        <SelectItem value="Low">Low Priority</SelectItem>
+                    </SelectContent>
+                </Select>
+                <Select value={sortOrder} onValueChange={(value) => setSortOrder(value as SortOrder)}>
+                    <SelectTrigger className="w-full md:w-[160px] h-10 text-sm">
+                        <ChevronDown size={15} className="mr-2 opacity-70" />
+                        <SelectValue placeholder="Sort by" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="newest">Newest First</SelectItem>
+                        <SelectItem value="oldest">Oldest First</SelectItem>
+                        <SelectItem value="priority">By Priority</SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
         </div>
-        <div className="flex gap-2 items-center">
-            <Select value={activePriorityFilter} onValueChange={(value) => setActivePriorityFilter(value as PriorityFilter)}>
-                <SelectTrigger className="w-full md:w-[180px] h-10">
-                    <Filter size={16} className="mr-2 opacity-70" />
-                    <SelectValue placeholder="Filter by priority" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="all">All Priorities</SelectItem>
-                    <SelectItem value="High">High</SelectItem>
-                    <SelectItem value="Medium">Medium</SelectItem>
-                    <SelectItem value="Low">Low</SelectItem>
-                </SelectContent>
-            </Select>
-            <Select value={sortOrder} onValueChange={(value) => setSortOrder(value as SortOrder)}>
-                <SelectTrigger className="w-full md:w-[180px] h-10">
-                     <ChevronDown size={16} className="mr-2 opacity-70" /> {/* Using ChevronDown as general sort icon */}
-                    <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="newest">Newest First</SelectItem>
-                    <SelectItem value="oldest">Oldest First</SelectItem>
-                    <SelectItem value="priority">By Priority</SelectItem>
-                </SelectContent>
-            </Select>
-        </div>
-      </div>
+      </Card>
       
-      <div className="grid grid-cols-1 gap-6">
-        {sortedStories.length > 0 ? (
-          sortedStories.map((story, index) => (
+      {sortedStories.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sortedStories.map((story, index) => (
             <Card 
               key={story.id}
-              className="p-6 card-hover animate-slideInUp"
-              style={{ animationDelay: `${index * 50}ms`, animationFillMode: 'forwards' }}
+              className="p-0 card-hover animate-slideInUp overflow-hidden shadow-lg flex flex-col" // Added flex flex-col
+              style={{ animationDelay: `${index * 70}ms`, animationFillMode: 'forwards' }}
             >
-              <CardContent className="p-0">
-                <div className="flex items-center justify-between mb-3">
-                  <Badge className={getPriorityBadgeClass(story.priority)}>{story.priority} Priority</Badge>
-                  <div className="text-sm text-muted-foreground">{story.date}</div>
-                </div>
-                
-                <h3 className="text-xl font-bold mb-2 text-foreground">{story.title}</h3>
-                <p className="mb-4 leading-relaxed text-muted-foreground line-clamp-2">{story.userStory}</p>
-                
-                <div className="flex justify-between items-center mt-4">
-                  <div className="flex -space-x-2">
-                    <Avatar className="w-8 h-8 border-2 border-background">
-                        <AvatarImage src="https://picsum.photos/40/40?grayscale&random=1" data-ai-hint="profile person" />
-                        <AvatarFallback>TU</AvatarFallback>
-                    </Avatar>
-                    <Avatar className="w-8 h-8 border-2 border-background">
-                        <AvatarImage src="https://picsum.photos/40/40?grayscale&random=2" data-ai-hint="profile person" />
-                        <AvatarFallback>JD</AvatarFallback>
-                    </Avatar>
+              <CardContent className="p-5 md:p-6 flex-grow flex flex-col justify-between"> {/* Added flex-grow and justify-between */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <Badge className={cn(getPriorityBadgeClass(story.priority), "capitalize")}>{story.priority}</Badge>
+                    <div className="text-xs text-muted-foreground">{story.date}</div>
                   </div>
                   
-                  <div className="flex space-x-1">
-                    <Button variant="ghost" size="icon" title="Copy (Not implemented)">
-                        <Copy size={18} />
-                    </Button>
-                    <Button variant="ghost" size="icon" title="Edit (Not implemented)">
-                        <Edit3 size={18} />
-                    </Button>
-                    <Button variant="ghost" size="icon" title="Delete Story" onClick={() => removeSavedStory(story.id)}>
-                        <Trash2 size={18} className="text-destructive/80 hover:text-destructive" />
-                    </Button>
+                  <h3 className="text-lg font-semibold mb-2 text-foreground line-clamp-2">{story.title}</h3>
+                  <p className="mb-4 text-sm leading-relaxed text-muted-foreground line-clamp-3">{story.userStory}</p>
+                </div>
+                
+                <div className="mt-auto pt-4 border-t border-border/50"> {/* Added border-t for separation */}
+                  <div className="flex justify-between items-center">
+                    <div className="flex -space-x-2">
+                      <Avatar className="w-7 h-7 border-2 border-background">
+                          <AvatarImage src={`https://picsum.photos/40/40?grayscale&random=${index + 1}`} data-ai-hint="profile person" />
+                          <AvatarFallback>{story.title.substring(0,1)}U</AvatarFallback>
+                      </Avatar>
+                      <Avatar className="w-7 h-7 border-2 border-background">
+                          <AvatarImage src={`https://picsum.photos/40/40?grayscale&random=${index + 2}`} data-ai-hint="profile person" />
+                          <AvatarFallback>AI</AvatarFallback>
+                      </Avatar>
+                    </div>
+                    
+                    <div className="flex space-x-1">
+                      <Button variant="ghost" size="icon" title="Copy Story" className="rounded-full w-8 h-8 hover:bg-accent/50">
+                          <Copy size={16} />
+                      </Button>
+                      <Button variant="ghost" size="icon" title="Edit Story" className="rounded-full w-8 h-8 hover:bg-accent/50">
+                          <Edit3 size={16} />
+                      </Button>
+                      <Button variant="ghost" size="icon" title="Delete Story" onClick={() => removeSavedStory(story.id)} className="rounded-full w-8 h-8 text-destructive/70 hover:text-destructive hover:bg-destructive/10">
+                          <Trash2 size={16} />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </CardContent>
             </Card>
-          ))
-        ) : (
-          <div className="text-center py-16 animate-fadeIn col-span-full">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full mb-6 bg-muted">
-              <SearchIcon size={36} className="text-muted-foreground" />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-20 md:py-24 animate-fadeIn col-span-full">
+            <div className="inline-flex items-center justify-center w-24 h-24 rounded-full mb-8 bg-muted border-4 border-border">
+              <Search size={48} className="text-muted-foreground opacity-70" />
             </div>
-            <h3 className="text-2xl font-bold mb-2 text-foreground">No stories found</h3>
-            <p className="text-lg mb-8 text-muted-foreground">
-              {searchQuery ? `No stories matching "${searchQuery}"` : "You haven't saved any stories yet."}
+            <h3 className="text-2xl md:text-3xl font-bold mb-3 text-foreground">No Stories Found</h3>
+            <p className="text-lg mb-10 text-muted-foreground max-w-md mx-auto">
+              {searchQuery || activePriorityFilter !== 'all' 
+                ? `No stories match your current filters. Try adjusting your search or filter settings.` 
+                : "You haven't saved any stories yet, or they don't match the current filter."}
             </p>
             <Button 
-              className="btn-hover-effect"
+              size="lg"
+              className="btn-hover-effect px-8 py-3 text-base"
               onClick={openNewStoryDialog}
             >
-              <Plus size={18} className="mr-2" /> Create a new story
+              <Plus size={20} className="mr-2" /> Create a New Story
             </Button>
           </div>
-        )}
-      </div>
+      )}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+
 // src/components/layout/app-sidebar.tsx
 "use client";
 
@@ -19,6 +20,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/hooks/use-app';
+import { cn } from '@/lib/utils';
 
 const navItems = [
   { name: 'Generate Story', href: '/', icon: Zap },
@@ -37,8 +39,8 @@ export function AppSidebar() {
     <>
       <SidebarHeader className="p-4">
         <div className="flex items-center">
-          <Link href="/" className="flex items-center">
-            <div className="bg-gradient-to-br from-primary to-accent rounded-lg p-2 mr-3">
+          <Link href="/" className="flex items-center group">
+            <div className="bg-gradient-to-br from-primary to-accent rounded-lg p-2 mr-3 transition-transform duration-300 ease-out group-hover:scale-110 group-hover:shadow-lg">
               <BookOpen size={20} className="text-primary-foreground" />
             </div>
             {sidebarOpen && (
@@ -56,14 +58,23 @@ export function AppSidebar() {
                 <SidebarMenuButton
                   asChild
                   isActive={pathname === item.href}
-                  className="w-full justify-start"
+                  className="w-full justify-start group/button" // Added group/button for icon targeting
                   tooltip={!sidebarOpen ? item.name : undefined}
                 >
                   <a>
-                    <item.icon className={sidebarOpen ? 'mr-3' : 'mx-auto'} size={sidebarOpen ? 18 : 20} />
+                    <item.icon 
+                      className={cn(
+                        sidebarOpen ? 'mr-3' : 'mx-auto',
+                        'transition-all duration-200 ease-out',
+                        // Apply animation on hover of the button (group/button)
+                        'group-hover/button:scale-110 group-hover/button:animate-icon-bob', 
+                        pathname === item.href && 'text-primary group-hover/button:text-primary animate-icon-pulse' // Active item icon pulse and color
+                      )} 
+                      size={sidebarOpen ? 18 : 20} 
+                    />
                     {sidebarOpen && <span>{item.name}</span>}
                     {pathname === item.href && sidebarOpen && (
-                      <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary" />
+                      <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                     )}
                   </a>
                 </SidebarMenuButton>
@@ -77,7 +88,7 @@ export function AppSidebar() {
             <SidebarSeparator className="my-4" />
             <SidebarGroup>
               <SidebarGroupLabel>Recent Stories</SidebarGroupLabel>
-              <SidebarMenu className="max-h-48 overflow-y-auto">
+              <SidebarMenu className="max-h-48 overflow-y-auto custom-scrollbar"> {/* Added custom-scrollbar if needed */}
                 {savedStories.slice(0,3).map((story) => (
                   <SidebarMenuItem key={story.id}>
                      <Link href={`/saved-stories?storyId=${story.id}`} legacyBehavior passHref>
@@ -85,11 +96,11 @@ export function AppSidebar() {
                         asChild
                         variant="ghost"
                         size="sm"
-                        className="w-full justify-start h-auto py-1.5"
+                        className="w-full justify-start h-auto py-1.5 group/button"
                         tooltip={!sidebarOpen ? story.title : undefined}
                        >
                         <a>
-                          <Bookmark size={14} className="mr-2 text-muted-foreground flex-shrink-0" />
+                          <Bookmark size={14} className="mr-2 text-muted-foreground flex-shrink-0 transition-transform duration-200 group-hover/button:scale-110" />
                           <div className="flex flex-col overflow-hidden">
                             <span className="text-xs font-medium truncate">{story.title}</span>
                             <span className="text-xs text-muted-foreground">{story.date}</span>
@@ -107,10 +118,10 @@ export function AppSidebar() {
 
       <SidebarFooter className="p-2">
         {sidebarOpen && (
-          <div className={`p-4 m-2 rounded-xl bg-secondary/50 border border-secondary`}>
+          <div className={`p-4 m-2 rounded-xl bg-secondary/50 border border-secondary transition-all duration-300 hover:shadow-lg`}>
             <div className="flex items-start mb-3">
               <div className={`p-2 rounded-lg bg-primary/10`}>
-                <Cpu size={18} className="text-primary" />
+                <Cpu size={18} className="text-primary animate-icon-pulse" />
               </div>
               <div className="ml-3">
                 <h4 className="font-medium text-sm text-foreground">AI Powered</h4>
@@ -118,7 +129,7 @@ export function AppSidebar() {
               </div>
             </div>
             <Button 
-              className="w-full"
+              className="w-full btn-hover-effect"
               size="sm"
               onClick={openNewStoryDialog}
             >
@@ -128,8 +139,8 @@ export function AppSidebar() {
         )}
         
         <div className={`p-4 flex items-center ${sidebarOpen ? 'justify-between' : 'justify-center'} border-t`}>
-          <Link href="/settings" className="flex items-center">
-            <Avatar className="w-8 h-8">
+          <Link href="/settings" className="flex items-center group">
+            <Avatar className="w-8 h-8 transition-transform duration-300 group-hover:scale-110">
               <AvatarImage src="https://picsum.photos/40/40?grayscale" alt="User Avatar" data-ai-hint="profile person" />
               <AvatarFallback>TU</AvatarFallback>
             </Avatar>
