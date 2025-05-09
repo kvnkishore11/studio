@@ -1,12 +1,14 @@
 // src/components/views/generate-story-view.tsx
 "use client";
 
+import { useState, useEffect } from 'react';
 import { MessageSquare, Cpu, Save, Download, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/hooks/use-app';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 const exampleStories = [
   { 
@@ -49,6 +51,16 @@ const howItWorksItems = [
 
 export function GenerateStoryView() {
   const { openNewStoryDialog, themeMode } = useApp();
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentStepIndex((prevIndex) => (prevIndex + 1) % howItWorksItems.length);
+    }, 5000); // Change step every 5 seconds
+    return () => clearInterval(timer); // Cleanup on unmount
+  }, []);
+
+  const currentItem = howItWorksItems[currentStepIndex];
 
   return (
     <div className="h-full flex flex-col space-y-8 md:space-y-12 animate-fadeIn">
@@ -78,19 +90,28 @@ export function GenerateStoryView() {
         <CardHeader>
           <CardTitle className="text-2xl">How It Works</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {howItWorksItems.map((item) => (
-              <div 
-                key={item.step}
-                className="rounded-xl p-6 text-center bg-card border card-hover"
-              >
-                <div className="mx-auto flex items-center justify-center w-14 h-14 rounded-full mb-4 bg-primary/10 text-primary">
-                  {item.icon}
-                </div>
-                <h4 className="text-lg font-bold mb-2 text-foreground">{item.title}</h4>
-                <p className="text-muted-foreground text-sm">{item.description}</p>
-              </div>
+        <CardContent className="overflow-hidden"> {/* Added overflow-hidden for cleaner animation boundaries */}
+          <div 
+            className="flex flex-col items-center justify-center p-6 text-center min-h-[200px] md:min-h-[220px] animate-fadeIn" 
+            key={currentStepIndex} // Re-trigger animation on step change
+          >
+            <div className="mx-auto flex items-center justify-center w-16 h-16 rounded-full mb-5 bg-primary/10 text-primary transform transition-all duration-500 ease-in-out hover:scale-110">
+              {currentItem.icon}
+            </div>
+            <h4 className="text-xl font-bold mb-2 text-foreground">{currentItem.title}</h4>
+            <p className="text-muted-foreground text-sm max-w-xs mx-auto">{currentItem.description}</p>
+          </div>
+          <div className="flex justify-center space-x-3 mt-4 pb-4">
+            {howItWorksItems.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentStepIndex(index)}
+                className={cn(
+                  "w-2.5 h-2.5 rounded-full transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2",
+                  currentStepIndex === index ? "bg-primary scale-125" : "bg-muted hover:bg-muted-foreground/50"
+                )}
+                aria-label={`Go to step ${index + 1}`}
+              />
             ))}
           </div>
         </CardContent>

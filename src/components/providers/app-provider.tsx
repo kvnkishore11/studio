@@ -15,7 +15,7 @@ interface AppContextType {
   toggleNotificationsPanel: () => void;
   savedStories: SavedStory[];
   addSavedStory: (story: SavedStory) => void;
-  removeSavedStory: (id: string) => void; // Assuming stories have string IDs
+  removeSavedStory: (id: string) => void;
   historyItems: HistoryItem[];
   addHistoryItem: (item: HistoryItem) => void;
   currentGeneratedStory: GeneratedStoryData | null;
