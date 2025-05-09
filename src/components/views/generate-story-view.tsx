@@ -2,15 +2,14 @@
 // src/components/views/generate-story-view.tsx
 "use client";
 
-import type { ReactNode } from 'react';
-import React from 'react'; // Removed useState, useEffect as they are now in HowItWorksAnimation
+import React from 'react'; 
 import { Zap, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/hooks/use-app';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Image from 'next/image';
-import { HowItWorksAnimation } from '@/components/how-it-works-animation'; // Import the new component
+import { HowItWorksAnimation } from '@/components/how-it-works-animation'; 
 
 const exampleStories = [
   { 
@@ -30,11 +29,9 @@ const exampleStories = [
   },
 ];
 
-// Removed the old howItWorksItems array and related logic
 
 export function GenerateStoryView() {
   const { openNewStoryDialog } = useApp();
-  // Removed useState for currentStepIndex and isInteracting as they are now managed by HowItWorksAnimation or not needed.
 
   return (
     <div className="h-full flex flex-col space-y-10 md:space-y-16 animate-fadeIn">
@@ -61,14 +58,13 @@ export function GenerateStoryView() {
       </div>
       
       <section 
-        className="animate-slideInUp" 
+        className="animate-slideInUp py-8 md:py-12" // Added padding for more space
         style={{animationDelay: '0.2s'}}
       >
         <h2 className="text-3xl font-bold text-center mb-4 text-foreground">How It Works</h2>
-        <p className="text-center text-muted-foreground mb-10 max-w-xl mx-auto">
-          Creating user stories is a simple, intuitive process with Story Spark. Watch our AI in action!
+        <p className="text-center text-muted-foreground mb-12 md:mb-16 max-w-xl mx-auto"> {/* Increased bottom margin */}
+          Creating user stories is a simple, intuitive process with Story Spark. See our AI in action through these steps:
         </p>
-        {/* Replace the old 3-card grid with the new animation component */}
         <HowItWorksAnimation />
       </section>
       
@@ -129,3 +125,4 @@ export function GenerateStoryView() {
     </div>
   );
 }
+
