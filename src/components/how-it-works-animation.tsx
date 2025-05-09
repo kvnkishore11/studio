@@ -17,14 +17,16 @@ const animationStepsData = [
     elements: (
       <>
         <Type size={32} className="mb-2 opacity-60 text-blue-500/80 animate-icon-pulse" />
-        <p 
+        <p
             className="text-xs text-muted-foreground animate-typewriter overflow-hidden whitespace-nowrap border-r-2 border-primary"
-            style={{ 
-              animationDuration: '2.5s', /* Slower to ensure all text appears */
-              animationTimingFunction: 'steps(26, end)', /* "Enter title & desc..." is 26 chars */
-              animationIterationCount: 1 , 
-              width: '26ch' /* Match character count */
-            }} 
+            style={{
+              fontFamily: 'monospace', // Ensures consistent character width for 'ch' units
+              animationDuration: '2.0s, 0.7s', // typewriter animation 2.0s, blinkCursor 0.7s
+              animationTimingFunction: 'steps(29, end), step-end', // 29 steps for "Enter title & description..."
+              // animationIterationCount is 'infinite' from the 'animate-typewriter' class for both animations
+              // animationFillMode is 'none' (due to infinite) for typewriter animation
+              width: '29ch' // Explicit width for the text content (29 characters)
+            }}
         >
             Enter title &amp; description...
         </p>

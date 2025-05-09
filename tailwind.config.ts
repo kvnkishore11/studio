@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -97,6 +98,8 @@ export default {
         slideInRight: { '0%': { opacity: '0', transform: 'translateX(30px)' }, '100%': { opacity: '1', transform: 'translateX(0)' } },
         zoomIn: { '0%': { opacity: '0', transform: 'scale(0.95)' }, '100%': { opacity: '1', transform: 'scale(1)' } },
         rotate: { from: { transform: 'rotate(0deg)' }, to: { transform: 'rotate(360deg)' } },
+        typewriter: { from: { width: '0' }, to: { width: '100%' } }, // Added typewriter keyframe for tailwind utility
+        blinkCursor: { '0%, 100%': { borderRightColor: 'transparent' }, '50%': { borderRightColor: 'hsl(var(--primary))' } }, // Added blinkCursor keyframe
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
@@ -109,6 +112,7 @@ export default {
         slideInRight: 'slideInRight 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards',
         zoomIn: 'zoomIn 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards',
         rotate: 'rotate 2s linear infinite',
+        typewriter: 'typewriter 1.8s steps(35, end) infinite, blinkCursor 0.7s step-end infinite', // Changed forwards to infinite
   		}
   	}
   },
