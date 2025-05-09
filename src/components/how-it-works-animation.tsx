@@ -17,7 +17,12 @@ const animationStepsData = [
     elements: (
       <>
         <Type size={32} className="mb-2 opacity-60 text-blue-500/80 animate-icon-pulse" />
-        <p className="text-xs text-muted-foreground">Enter title &amp; description...</p>
+        <p 
+            className="text-xs text-muted-foreground animate-typewriter overflow-hidden whitespace-nowrap border-r-2 border-primary"
+            style={{ animationDuration: '2s', animationTimingFunction: 'steps(30, end)', animationIterationCount: 1 , width: '15ch' }} // Adjusted width
+        >
+            Enter title &amp; description...
+        </p>
         <div className="mt-3 w-32 h-12 bg-card border-2 border-dashed border-border rounded-lg flex items-center justify-center shadow-inner">
             <MousePointerClick size={18} className="text-muted-foreground/70 animate-icon-bob" style={{animationDuration: '1.5s'}}/>
             <span className="ml-2 text-xs text-muted-foreground/70">Click Generate</span>
