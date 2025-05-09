@@ -3,29 +3,14 @@
 "use client";
 
 import type { ReactNode } from 'react';
-import React, { useState, useEffect } from 'react';
-import { MessageSquare, Cpu, Save, Zap, ArrowRight } from 'lucide-react';
+import React from 'react'; // Removed useState, useEffect as they are now in HowItWorksAnimation
+import { Zap, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/hooks/use-app';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Image from 'next/image';
-import { cn } from '@/lib/utils';
-
-interface HowItWorksItem {
-  step: number;
-  title: string;
-  description: string;
-  icon: ReactNode;
-  animationClass?: string; // Made optional, will apply animation based on active state
-  baseBg: string;
-  activeBg: string;
-  iconBaseBg: string;
-  iconActiveBg: string;
-  iconColor: string;
-  activeIconColor: string;
-  activeBorderColor: string;
-}
+import { HowItWorksAnimation } from '@/components/how-it-works-animation'; // Import the new component
 
 const exampleStories = [
   { 
@@ -45,64 +30,11 @@ const exampleStories = [
   },
 ];
 
-const howItWorksItems: HowItWorksItem[] = [
-  { 
-    step: 1,
-    title: 'Describe Your Feature', 
-    description: 'Enter a title and brief description of the feature you want to develop.',
-    icon: <MessageSquare size={36} />,
-    animationClass: 'animate-icon-sway',
-    baseBg: 'bg-card',
-    activeBg: 'bg-primary/5',
-    iconBaseBg: 'bg-muted',
-    iconActiveBg: 'bg-primary',
-    iconColor: 'text-muted-foreground',
-    activeIconColor: 'text-primary-foreground',
-    activeBorderColor: 'border-primary/40',
-  },
-  { 
-    step: 2,
-    title: 'AI Generates Story', 
-    description: 'Our AI transforms your input into a complete user story with acceptance criteria and details.',
-    icon: <Cpu size={36} />,
-    animationClass: 'animate-icon-pulse',
-    baseBg: 'bg-card',
-    activeBg: 'bg-primary/5',
-    iconBaseBg: 'bg-muted',
-    iconActiveBg: 'bg-primary',
-    iconColor: 'text-muted-foreground',
-    activeIconColor: 'text-primary-foreground',
-    activeBorderColor: 'border-primary/40',
-  },
-  { 
-    step: 3,
-    title: 'Review & Save', 
-    description: 'Review the generated story, make any edits if needed, and save it to your collection.',
-    icon: <Save size={36} />,
-    animationClass: 'animate-icon-bob',
-    baseBg: 'bg-card',
-    activeBg: 'bg-primary/5',
-    iconBaseBg: 'bg-muted',
-    iconActiveBg: 'bg-primary',
-    iconColor: 'text-muted-foreground',
-    activeIconColor: 'text-primary-foreground',
-    activeBorderColor: 'border-primary/40',
-  },
-];
+// Removed the old howItWorksItems array and related logic
 
 export function GenerateStoryView() {
-  const { openNewStoryDialog, themeMode } = useApp();
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [isInteracting, setIsInteracting] = useState(false); // To pause auto-cycle on hover/click
-
-  useEffect(() => {
-    if (isInteracting) return; // Don't auto-cycle if user is interacting
-
-    const timer = setInterval(() => {
-      setCurrentStepIndex((prevIndex) => (prevIndex + 1) % howItWorksItems.length);
-    }, 4000); // Change step every 4 seconds
-    return () => clearInterval(timer);
-  }, [isInteracting]);
+  const { openNewStoryDialog } = useApp();
+  // Removed useState for currentStepIndex and isInteracting as they are now managed by HowItWorksAnimation or not needed.
 
   return (
     <div className="h-full flex flex-col space-y-10 md:space-y-16 animate-fadeIn">
@@ -131,44 +63,13 @@ export function GenerateStoryView() {
       <section 
         className="animate-slideInUp" 
         style={{animationDelay: '0.2s'}}
-        onMouseEnter={() => setIsInteracting(true)}
-        onMouseLeave={() => setIsInteracting(false)}
       >
         <h2 className="text-3xl font-bold text-center mb-4 text-foreground">How It Works</h2>
         <p className="text-center text-muted-foreground mb-10 max-w-xl mx-auto">
-          Creating user stories is a simple, three-step process with Story Spark.
+          Creating user stories is a simple, intuitive process with Story Spark. Watch our AI in action!
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-          {howItWorksItems.map((item, index) => (
-            <div
-              key={item.step}
-              className={cn(
-                "flex flex-col items-center p-6 md:p-8 text-center rounded-2xl shadow-lg hover:shadow-xl cursor-pointer transition-all duration-350 ease-in-out transform hover:-translate-y-1.5 border-2",
-                index === currentStepIndex
-                  ? `${item.activeBg} ${item.activeBorderColor} scale-105`
-                  : `${item.baseBg} border-transparent opacity-80 hover:opacity-100`
-              )}
-              onClick={() => setCurrentStepIndex(index)}
-            >
-              <div className={cn(
-                "mb-6 flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-full transition-all duration-350",
-                index === currentStepIndex ? `${item.iconActiveBg} ${item.activeIconColor} shadow-lg ${item.animationClass}` : `${item.iconBaseBg} ${item.iconColor}`
-              )}>
-                {item.icon}
-              </div>
-              <h4 className={cn(
-                "text-xl md:text-2xl font-semibold mb-3",
-                index === currentStepIndex ? (themeMode === 'dark' ? 'text-primary' : 'text-primary') : "text-foreground"
-              )}>{item.title}</h4>
-              <p className={cn(
-                "text-sm md:text-base max-w-xs mx-auto leading-relaxed",
-                index === currentStepIndex ? "text-foreground/80" : "text-muted-foreground"
-              )}>
-                {item.description}
-              </p>
-            </div>
-          ))}
-        </div>
+        {/* Replace the old 3-card grid with the new animation component */}
+        <HowItWorksAnimation />
       </section>
       
       <Card className="shadow-xl card-hover animate-slideInUp" style={{animationDelay: '0.4s'}}>

@@ -190,6 +190,17 @@ h1, h2, h3, h4, h5, h6 {
   50% { box-shadow: 0 0 12px 3px hsl(var(--primary) / 0.3); }
 }
 
+/* Animation for HowItWorks component */
+@keyframes ai-progress-bar {
+  0% { transform: translateX(-100%); opacity: 0.5; }
+  50% { transform: translateX(0%); opacity: 1; }
+  100% { transform: translateX(100%); opacity: 0.5;}
+}
+.animate-ai-progress-bar {
+  animation: ai-progress-bar 1.5s ease-in-out infinite;
+}
+
+
 .animate-fadeIn {
   animation: fadeIn 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards; /* Faster */
 }
