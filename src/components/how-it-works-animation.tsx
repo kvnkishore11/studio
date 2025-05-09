@@ -19,7 +19,12 @@ const animationStepsData = [
         <Type size={32} className="mb-2 opacity-60 text-blue-500/80 animate-icon-pulse" />
         <p 
             className="text-xs text-muted-foreground animate-typewriter overflow-hidden whitespace-nowrap border-r-2 border-primary"
-            style={{ animationDuration: '2s', animationTimingFunction: 'steps(30, end)', animationIterationCount: 1 , width: '15ch' }} // Adjusted width
+            style={{ 
+              animationDuration: '2.5s', /* Slower to ensure all text appears */
+              animationTimingFunction: 'steps(26, end)', /* "Enter title & desc..." is 26 chars */
+              animationIterationCount: 1 , 
+              width: '26ch' /* Match character count */
+            }} 
         >
             Enter title &amp; description...
         </p>
