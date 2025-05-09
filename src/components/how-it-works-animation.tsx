@@ -1,4 +1,3 @@
-
 "use client";
 
 import React from 'react';
@@ -18,16 +17,12 @@ const animationStepsData = [
       <>
         <Type size={32} className="mb-2 opacity-60 text-blue-500/80 animate-icon-pulse" />
         <p
-            className="text-xs text-muted-foreground animate-typewriter overflow-hidden whitespace-nowrap border-r-2 border-primary"
+            className="text-xs text-muted-foreground animate-typewriter overflow-hidden whitespace-nowrap border-r-2" // Removed border-primary, animate-typewriter handles border color via keyframe
             style={{
-              fontFamily: 'monospace', // Ensures consistent character width for 'ch' units
-              // These are intended to override parts of the 'animate-typewriter' Tailwind utility
-              animationName: 'typewriter, blinkCursor', // Use the global keyframes
-              animationDuration: '2.0s, 0.7s', // typewriter 2.0s, blinkCursor 0.7s
-              animationTimingFunction: 'steps(28, end), step-end', // typewriter 28 steps for "Enter title & description..."
-              animationIterationCount: 'infinite, infinite', // Both animations repeat infinitely
-              animationFillMode: 'none, none', // Default for infinite, resets state each iteration
-              width: '28ch' // Explicit width for the text content (28 characters)
+              fontFamily: 'monospace',
+              width: '28ch', // Target width for the animation (100% in keyframe); 'animate-typewriter' class sets initial width:0.
+              // animation shorthand overrides Tailwind's animate-typewriter animation properties for precision.
+              animation: `typewriter 2.0s steps(28, end) infinite, blinkCursor 0.7s step-end infinite`,
             }}
         >
             Enter title &amp; description...
