@@ -200,6 +200,28 @@ h1, h2, h3, h4, h5, h6 {
   animation: ai-progress-bar 1.5s ease-in-out infinite;
 }
 
+@keyframes icon-confirm-pop {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+.animate-icon-confirm-pop {
+  animation: icon-confirm-pop 1.2s ease-in-out infinite;
+}
+
+@keyframes text-focus-in {
+  0% {
+    filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+.animate-text-focus-in {
+    animation: text-focus-in 0.8s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+
 
 .animate-fadeIn {
   animation: fadeIn 0.5s cubic-bezier(0.215, 0.61, 0.355, 1) forwards; /* Faster */
@@ -238,7 +260,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .animate-typewriter {
-  animation: typewriter 1.8s steps(35, end) forwards; /* Adjusted speed */
+  animation: typewriter 1.8s steps(35, end) forwards, blinkCursor 0.7s step-end infinite;
   overflow: hidden;
   white-space: nowrap;
   border-right: 2px solid transparent; /* Thinner cursor */

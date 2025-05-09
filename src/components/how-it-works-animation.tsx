@@ -16,7 +16,7 @@ const animationStepsData = [
     ringColor: 'ring-blue-500/20',
     elements: (
       <>
-        <Type size={32} className="mb-2 opacity-60 text-blue-500/80" />
+        <Type size={32} className="mb-2 opacity-60 text-blue-500/80 animate-icon-pulse" />
         <p className="text-xs text-muted-foreground">Enter title &amp; description...</p>
         <div className="mt-3 w-32 h-12 bg-card border-2 border-dashed border-border rounded-lg flex items-center justify-center shadow-inner">
             <MousePointerClick size={18} className="text-muted-foreground/70 animate-icon-bob" style={{animationDuration: '1.5s'}}/>
@@ -60,9 +60,9 @@ const animationStepsData = [
     ringColor: 'ring-green-500/20',
     elements: (
       <>
-        <CheckCircle size={36} className="mb-1.5 text-green-500 animate-subtle-glow" style={{animationDuration: '1.5s'}}/>
-        <p className="text-xs text-muted-foreground">Your story is ready!</p>
-        <p className="text-xs text-muted-foreground">Save it to your collection.</p>
+        <CheckCircle size={36} className="mb-1.5 text-green-500 animate-subtle-glow animate-icon-confirm-pop" style={{animationDelay: '0.1s'}}/>
+        <p className="text-xs text-muted-foreground animate-text-focus-in" style={{animationDelay: '0.3s'}}>Your story is ready!</p>
+        <p className="text-xs text-muted-foreground animate-text-focus-in" style={{animationDelay: '0.5s'}}>Save it to your collection.</p>
       </>
     ),
   },
@@ -100,7 +100,7 @@ export function HowItWorksAnimation() {
               {step.title}
             </h4>
             
-            <div className="h-28 flex flex-col items-center justify-center w-full"> {/* Increased height slightly for more space */}
+            <div className="min-h-[7rem] flex flex-col items-center justify-center w-full"> {/* Use min-height and flex for centering */}
                 {step.elements}
             </div>
           </div>
