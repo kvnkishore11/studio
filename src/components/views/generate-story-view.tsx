@@ -1,14 +1,23 @@
 // src/components/views/generate-story-view.tsx
 "use client";
 
+import type { ReactNode } from 'react';
 import { useState, useEffect } from 'react';
-import { MessageSquare, Cpu, Save, Download, Zap } from 'lucide-react';
+import { MessageSquare, Cpu, Save, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/hooks/use-app';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
+
+interface HowItWorksItem {
+  step: number;
+  title: string;
+  description: string;
+  icon: ReactNode;
+  animationClass: string;
+}
 
 const exampleStories = [
   { 
@@ -28,29 +37,32 @@ const exampleStories = [
   },
 ];
 
-const howItWorksItems = [
+const howItWorksItems: HowItWorksItem[] = [
   { 
     step: 1,
     title: 'Describe Your Feature', 
     description: 'Enter a title and brief description of the feature you want to develop.',
     icon: <MessageSquare size={30} />,
+    animationClass: 'animate-icon-sway',
   },
   { 
     step: 2,
     title: 'AI Generates Story', 
     description: 'Our AI transforms your description into a complete user story with acceptance criteria.',
     icon: <Cpu size={30} />,
+    animationClass: 'animate-icon-pulse',
   },
   { 
     step: 3,
     title: 'Review & Save', 
     description: 'Review the generated story, make any edits if needed, and save it to your collection.',
     icon: <Save size={30} />,
+    animationClass: 'animate-icon-bob',
   },
 ];
 
 export function GenerateStoryView() {
-  const { openNewStoryDialog, themeMode } = useApp();
+  const { openNewStoryDialog } = useApp();
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
   useEffect(() => {
@@ -95,7 +107,10 @@ export function GenerateStoryView() {
             className="flex flex-col items-center justify-center p-6 text-center min-h-[200px] md:min-h-[220px] animate-fadeIn" 
             key={currentStepIndex} // Re-trigger animation on step change
           >
-            <div className="mx-auto flex items-center justify-center w-16 h-16 rounded-full mb-5 bg-primary/10 text-primary transform transition-all duration-500 ease-in-out hover:scale-110">
+            <div className={cn(
+              "mx-auto flex items-center justify-center w-16 h-16 rounded-full mb-5 bg-primary/10 text-primary transform transition-all duration-500 ease-in-out hover:scale-110",
+              currentItem.animationClass // Apply the animation class of the current item
+            )}>
               {currentItem.icon}
             </div>
             <h4 className="text-xl font-bold mb-2 text-foreground">{currentItem.title}</h4>
