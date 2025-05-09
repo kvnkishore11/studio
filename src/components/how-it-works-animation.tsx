@@ -21,11 +21,13 @@ const animationStepsData = [
             className="text-xs text-muted-foreground animate-typewriter overflow-hidden whitespace-nowrap border-r-2 border-primary"
             style={{
               fontFamily: 'monospace', // Ensures consistent character width for 'ch' units
-              animationDuration: '2.0s, 0.7s', // typewriter animation 2.0s, blinkCursor 0.7s
-              animationTimingFunction: 'steps(29, end), step-end', // 29 steps for "Enter title & description..."
-              // animationIterationCount is 'infinite' from the 'animate-typewriter' class for both animations
-              // animationFillMode is 'none' (due to infinite) for typewriter animation
-              width: '29ch' // Explicit width for the text content (29 characters)
+              // These are intended to override parts of the 'animate-typewriter' Tailwind utility
+              animationName: 'typewriter, blinkCursor', // Use the global keyframes
+              animationDuration: '2.0s, 0.7s', // typewriter 2.0s, blinkCursor 0.7s
+              animationTimingFunction: 'steps(28, end), step-end', // typewriter 28 steps for "Enter title & description..."
+              animationIterationCount: 'infinite, infinite', // Both animations repeat infinitely
+              animationFillMode: 'none, none', // Default for infinite, resets state each iteration
+              width: '28ch' // Explicit width for the text content (28 characters)
             }}
         >
             Enter title &amp; description...
@@ -64,7 +66,7 @@ const animationStepsData = [
   },
   {
     id: 'save',
-    title: '3. Review & Save',
+    title: '3. Review &amp; Save',
     icon: Save,
     bgColorStops: 'from-green-500/10 via-green-500/5 to-transparent',
     iconColor: 'text-green-500',
