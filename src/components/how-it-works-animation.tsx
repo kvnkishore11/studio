@@ -21,11 +21,8 @@ const animationStepsData = [
             className="text-xs text-muted-foreground animate-typewriter"
             style={{
               fontFamily: 'monospace',
-              animation: `typewriter 2s steps(28, end) infinite`, // 28 is length of "Enter title & description..."
-              display: 'inline-block', // Ensures width animation is based on content
-              // The `animate-typewriter` class from globals.css sets:
-              // overflow: hidden; white-space: nowrap; width: 0;
-              // The animation property here overrides any conflicting animation from Tailwind's theme.
+              animation: `typewriter 2s steps(28, end) infinite`,
+              display: 'inline-block',
             }}
         >
             Enter title &amp; description...
@@ -64,7 +61,7 @@ const animationStepsData = [
   },
   {
     id: 'save',
-    title: '3. Review &amp; Save',
+    title: '3. Review & Save', // Fixed &amp; to &
     icon: Save,
     bgColorStops: 'from-green-500/10 via-green-500/5 to-transparent',
     iconColor: 'text-green-500',
@@ -72,7 +69,7 @@ const animationStepsData = [
     ringColor: 'ring-green-500/20',
     elements: (
       <>
-        <CheckCircle size={36} className="mb-1.5 text-green-500 animate-subtle-glow animate-icon-confirm-pop" style={{animationDelay: '0.1s'}}/>
+        <CheckCircle size={36} className="mb-1.5 text-green-500 animate-icon-confirm-pop" style={{animationDelay: '0.1s'}}/>
         <p className="text-xs text-muted-foreground animate-text-focus-in" style={{animationDelay: '0.3s'}}>Your story is ready!</p>
         <p className="text-xs text-muted-foreground animate-text-focus-in" style={{animationDelay: '0.5s'}}>Save it to your collection.</p>
       </>
