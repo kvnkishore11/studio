@@ -18,9 +18,14 @@ const animationStepsData = [
       <>
         <Type size={32} className="mb-2 opacity-60 text-blue-500/80 animate-icon-pulse" />
         <p
-            className="text-xs text-muted-foreground"
+            className="text-xs text-muted-foreground animate-typewriter"
             style={{
               fontFamily: 'monospace',
+              animation: `typewriter 2s steps(28, end) infinite`, // 28 is length of "Enter title & description..."
+              display: 'inline-block', // Ensures width animation is based on content
+              // The `animate-typewriter` class from globals.css sets:
+              // overflow: hidden; white-space: nowrap; width: 0;
+              // The animation property here overrides any conflicting animation from Tailwind's theme.
             }}
         >
             Enter title &amp; description...
