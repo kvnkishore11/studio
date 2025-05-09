@@ -158,11 +158,6 @@ h1, h2, h3, h4, h5, h6 {
   to { width: 100%; }
 }
 
-@keyframes blinkCursor {
-  0%, 100% { border-right-color: transparent; }
-  50% { border-right-color: hsl(var(--primary)); }
-}
-
 /* Icon specific animations */
 @keyframes icon-pulse { /* Subtle pulse for icons */
   0%, 100% { transform: scale(1); opacity: 1; }
@@ -260,18 +255,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .animate-typewriter {
-  /* Default animation applied by Tailwind's 'animate-typewriter' utility class. */
-  /* It references 'typewriter' and 'blinkCursor' keyframes. */
-  /* Specific durations, steps, etc., can be overridden inline or by more specific classes. */
   overflow: hidden;
   white-space: nowrap;
-  border-right: 2px solid transparent; /* Default for cursor, blinkCursor keyframe will change it */
   width: 0; /* Initial width before animation starts */
+  /* Animation: typewriter [duration] steps([char_count], end) [delay] [iteration-count] */
+  /* Example: animation: typewriter 2s steps(20, end) infinite; */
 }
 
-.animate-blinkCursor { /* This class can be used if only blinkCursor is needed */
-  animation: blinkCursor 0.7s step-end infinite;
-}
 
 .animate-icon-pulse {
   animation: icon-pulse 1.8s infinite cubic-bezier(0.4, 0, 0.6, 1);
