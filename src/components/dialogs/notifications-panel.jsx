@@ -7,40 +7,26 @@ import { Button } from "@/components/ui/button";
 import { useApp } from '@/hooks/use-app';
 import { useReducedMotion } from '@/lib/use-reduced-motion';
 import { cn } from '@/lib/utils';
+import { notificationsMock } from '@/data/mocks/notifications';
 
-/**
- * Mock notifications data for demonstration
- * @type {Array<{id: string, title: string, message: string, time: string, isNew: boolean}>}
- */
-const notificationsMock = [
-  { 
-    id: '1',
-    title: 'Story Generated', 
-    message: 'Your "User Authentication" story has been successfully generated.',
-    time: '5 minutes ago',
-    isNew: true
-  },
-  { 
-    id: '2',
-    title: 'Template Updated', 
-    message: 'The "Basic User Story" template has been updated with new fields.',
-    time: '2 hours ago',
-    isNew: true
-  },
-  { 
-    id: '3',
-    title: 'Story Reminder', 
-    message: 'You have 3 unfinished stories. Would you like to continue working on them?',
-    time: 'Yesterday',
-    isNew: false
-  },
-];
 
 /**
  * Notifications panel component that displays user notifications
  */
 export function NotificationsPanel() {
-  const { toggleNotificationsPanel, themeMode } = useApp();
+  // Safely try to use the useApp hook, but provide fallback values if it fails
+  let appContext = { 
+    toggleNotificationsPanel: () => console.warn('AppProvider not found'),
+    themeMode: 'light'
+  };
+  
+  try {
+    appContext = useApp();
+  } catch (error) {
+    console.warn('NotificationsPanel: AppProvider not found in context, using default values');
+  }
+  
+  const { toggleNotificationsPanel, themeMode } = appContext;
   const prefersReducedMotion = useReducedMotion();
 
   // Define animation variants

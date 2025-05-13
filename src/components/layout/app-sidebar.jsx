@@ -3,7 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, Zap, History, LayoutGrid, Settings, Cpu, Bookmark, User } from 'lucide-react';
+import { BookOpen, User } from 'lucide-react';
 import { 
   SidebarHeader, 
   SidebarContent, 
@@ -20,18 +20,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/hooks/use-app';
 import { cn } from '@/lib/utils';
+import { navItems } from '@/data/mocks/nav-items';
 
-/**
- * Navigation items for the sidebar
- * @type {Array<{name: string, href: string, icon: React.ComponentType}>}
- */
-const navItems = [
-  { name: 'Generate Story', href: '/', icon: Zap },
-  { name: 'Saved Stories', href: '/saved-stories', icon: BookOpen },
-  { name: 'History', href: '/history', icon: History },
-  { name: 'Templates', href: '/templates', icon: LayoutGrid },
-  { name: 'Settings', href: '/settings', icon: Settings },
-];
+// Navigation items are now imported from separate file
 
 /**
  * Application sidebar component
@@ -39,7 +30,21 @@ const navItems = [
 export function AppSidebar() {
   const pathname = usePathname();
   const { open: sidebarOpen } = useSidebar();
-  const { themeMode, openNewStoryDialog, savedStories } = useApp();
+  
+  // Safely try to use the useApp hook, but provide fallback values if it fails
+  let appContext = { 
+    themeMode: 'light',
+    openNewStoryDialog: () => console.warn('AppProvider not found'),
+    savedStories: []
+  };
+  
+  try {
+    appContext = useApp();
+  } catch (error) {
+    console.warn('AppSidebar: AppProvider not found in context, using default values');
+  }
+  
+  const { themeMode, openNewStoryDialog, savedStories } = appContext;
 
   return (
     <>

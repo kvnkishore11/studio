@@ -9,24 +9,31 @@ import { useApp } from '@/hooks/use-app';
 import { useSidebar } from '@/components/ui/sidebar'; 
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { pageTitles } from '@/data/mocks/page-titles';
 
-/**
- * @type {Object.<string, string>}
- */
-const pageTitles = {
-  '/': 'Generate Story',
-  '/saved-stories': 'Saved Stories',
-  '/history': 'History',
-  '/templates': 'Templates',
-  '/settings': 'Settings',
-};
+// Page titles are now imported from separate file
 
 /**
  * Application header component
  */
 export function AppHeader() {
   const pathname = usePathname();
-  const { openNewStoryDialog, toggleNotificationsPanel, themeMode, toggleTheme } = useApp();
+  
+  // Safely try to use the useApp hook, but provide fallback values if it fails
+  let appContext = { 
+    openNewStoryDialog: () => console.warn('AppProvider not found'),
+    toggleNotificationsPanel: () => console.warn('AppProvider not found'),
+    themeMode: 'light',
+    toggleTheme: () => console.warn('AppProvider not found')
+  };
+  
+  try {
+    appContext = useApp();
+  } catch (error) {
+    console.warn('AppHeader: AppProvider not found in context, using default values');
+  }
+  
+  const { openNewStoryDialog, toggleNotificationsPanel, themeMode, toggleTheme } = appContext;
   const { toggleSidebar, isMobile } = useSidebar(); 
 
   const title = pageTitles[pathname] || 'Story Spark';
