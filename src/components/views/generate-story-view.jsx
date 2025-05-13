@@ -261,32 +261,32 @@ export function GenerateStoryView() {
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">How It Works</span>
         </h2>
         
-        <div className="flex flex-col md:flex-row justify-center gap-6 max-w-6xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto px-4">
           {/* Card 1 - Describe Your Feature */}
-          <div className="flex-1 max-w-[320px] mx-auto">
-            <div className="bg-white dark:bg-slate-900 rounded-xl shadow-md border border-slate-200 dark:border-slate-800 overflow-hidden">
-              <div className="p-6 flex flex-col items-center">
+          <div className="w-full">
+            <div className="bg-blue-50/30 dark:bg-blue-950/10 rounded-xl shadow-sm border border-blue-100/50 dark:border-blue-900/20 overflow-hidden h-[220px]">
+              <div className="p-6 flex flex-col items-center h-full">
                 {/* Icon Circle */}
-                <div className="w-14 h-14 rounded-full bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center mb-4 shadow-sm">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500 dark:text-blue-400"><path d="M17 6.1H3"></path><path d="M21 12.1H3"></path><path d="M15.1 18H3"></path></svg>
+                <div className="w-12 h-12 rounded-full bg-white dark:bg-blue-900/20 flex items-center justify-center mb-3 shadow-sm border border-blue-100 dark:border-blue-800/30">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500 dark:text-blue-400"><path d="M17 6.1H3"></path><path d="M21 12.1H3"></path><path d="M15.1 18H3"></path></svg>
                 </div>
                 
                 {/* Title */}
-                <h3 className="text-blue-500 dark:text-blue-400 text-base font-medium mb-6 text-center">
+                <h3 className="text-blue-500 dark:text-blue-400 text-sm font-medium mb-5 text-center">
                   1. Describe Your Feature
                 </h3>
                 
                 {/* Content */}
-                <div className="w-full flex flex-col items-center">
-                  <div className="text-blue-500 dark:text-blue-400 text-3xl mb-3 font-light">
+                <div className="w-full flex flex-col items-center flex-grow justify-center">
+                  <div className="text-blue-500 dark:text-blue-400 text-3xl mb-2 font-light">
                     T
                   </div>
-                  <div className="text-center text-xs text-slate-400 dark:text-slate-500 mb-4">
-                    <span className="animate-typing-text inline-block overflow-hidden whitespace-nowrap w-0">Enter title & descript</span>
+                  <div className="text-center text-xs text-slate-400 dark:text-slate-500 mb-4 h-4 overflow-hidden">
+                    <span className="animate-typing-text inline-block whitespace-nowrap w-0">Enter title & descript</span>
                   </div>
                   
-                  <div className="mt-2 w-[140px] h-[32px] rounded-md border border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400 mr-1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                  <div className="mt-1 w-[120px] h-[28px] rounded-md border border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center cursor-pointer hover:bg-white/50 dark:hover:bg-slate-800/30 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-slate-400 mr-1"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
                     <span className="text-xs text-slate-400">Click Generate</span>
                   </div>
                 </div>
@@ -295,22 +295,22 @@ export function GenerateStoryView() {
           </div>
           
           {/* Card 2 - AI Generates Story */}
-          <div className="flex-1 max-w-[320px] mx-auto">
-            <div className="bg-white dark:bg-slate-900 rounded-xl shadow-md border border-slate-200 dark:border-slate-800 overflow-hidden">
-              <div className="p-6 flex flex-col items-center">
+          <div className="w-full">
+            <div className="bg-purple-50/30 dark:bg-purple-950/10 rounded-xl shadow-sm border border-purple-100/50 dark:border-purple-900/20 overflow-hidden h-[220px]">
+              <div className="p-6 flex flex-col items-center h-full">
                 {/* Icon Circle */}
-                <div className="w-14 h-14 rounded-full bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center mb-4 shadow-sm">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-500 dark:text-purple-400"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                <div className="w-12 h-12 rounded-full bg-white dark:bg-purple-900/20 flex items-center justify-center mb-3 shadow-sm border border-purple-100 dark:border-purple-800/30">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-500 dark:text-purple-400"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                 </div>
                 
                 {/* Title */}
-                <h3 className="text-purple-500 dark:text-purple-400 text-base font-medium mb-6 text-center">
+                <h3 className="text-purple-500 dark:text-purple-400 text-sm font-medium mb-5 text-center">
                   2. AI Generates Story
                 </h3>
                 
                 {/* Content */}
-                <div className="w-full flex flex-col items-center">
-                  <div className="w-full space-y-3 mb-4">
+                <div className="w-full flex flex-col items-center flex-grow justify-center">
+                  <div className="w-full max-w-[160px] mx-auto space-y-3 mb-4">
                     <div className="h-2 w-full relative overflow-hidden">
                       <div className="absolute left-0 top-0 h-full bg-purple-400 dark:bg-purple-500 rounded-full animate-slide-right"></div>
                     </div>
@@ -331,23 +331,23 @@ export function GenerateStoryView() {
           </div>
           
           {/* Card 3 - Review & Save */}
-          <div className="flex-1 max-w-[320px] mx-auto">
-            <div className="bg-white dark:bg-slate-900 rounded-xl shadow-md border border-slate-200 dark:border-slate-800 overflow-hidden">
-              <div className="p-6 flex flex-col items-center">
+          <div className="w-full">
+            <div className="bg-green-50/30 dark:bg-green-950/10 rounded-xl shadow-sm border border-green-100/50 dark:border-green-900/20 overflow-hidden h-[220px]">
+              <div className="p-6 flex flex-col items-center h-full">
                 {/* Icon Circle */}
-                <div className="w-14 h-14 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mb-4 shadow-sm">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 dark:text-green-400"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                <div className="w-12 h-12 rounded-full bg-white dark:bg-green-900/20 flex items-center justify-center mb-3 shadow-sm border border-green-100 dark:border-green-800/30">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 dark:text-green-400"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
                 </div>
                 
                 {/* Title */}
-                <h3 className="text-green-500 dark:text-green-400 text-base font-medium mb-6 text-center">
+                <h3 className="text-green-500 dark:text-green-400 text-sm font-medium mb-5 text-center">
                   3. Review &amp; Save
                 </h3>
                 
                 {/* Content */}
-                <div className="w-full flex flex-col items-center">
-                  <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/20 flex items-center justify-center mb-3 animate-check-appear">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 dark:text-green-400 animate-draw-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <div className="w-full flex flex-col items-center flex-grow justify-center">
+                  <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/20 flex items-center justify-center mb-3 animate-check-appear">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 dark:text-green-400 animate-draw-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
                   </div>
                   
                   <div className="text-center">
