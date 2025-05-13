@@ -1,5 +1,8 @@
-// src/components/layout/app-header.jsx
+
+// src/components/layout/app-header.tsx
 "use client";
+
+import * as React from 'react';
 
 import { usePathname } from 'next/navigation';
 import { Menu, Plus, Bell, Moon, Sun, Search as SearchIconLucide } from 'lucide-react'; // Renamed Search to avoid conflict
@@ -9,32 +12,40 @@ import { useApp } from '@/hooks/use-app';
 import { useSidebar } from '@/components/ui/sidebar'; 
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { pageTitles } from '@/data/mocks/page-titles';
 
-// Page titles are now imported from separate file
+const pageTitles = {
+  '/': 'Generate Story',
+  '/saved-stories': 'Saved Stories',
+  '/history': 'History',
+  '/templates': 'Templates',
+  '/settings': 'Settings',
+};
 
-/**
- * Application header component
- */
 export function AppHeader() {
   const pathname = usePathname();
   
   // Safely try to use the useApp hook, but provide fallback values if it fails
   let appContext = { 
-    openNewStoryDialog: () => console.warn('AppProvider not found'),
-    toggleNotificationsPanel: () => console.warn('AppProvider not found'),
-    themeMode: 'light',
-    toggleTheme: () => console.warn('AppProvider not found')
+    openNewStoryDialog: () => {}, 
+    toggleNotificationsPanel: () => {}, 
+    themeMode: 'dark', 
+    toggleTheme: () => {} 
   };
-  
   try {
     appContext = useApp();
   } catch (error) {
     console.warn('AppHeader: AppProvider not found in context, using default values');
   }
-  
   const { openNewStoryDialog, toggleNotificationsPanel, themeMode, toggleTheme } = appContext;
-  const { toggleSidebar, isMobile } = useSidebar(); 
+  
+  // Safely try to use the useSidebar hook
+  let sidebarContext = { toggleSidebar: () => {}, isMobile: false };
+  try {
+    sidebarContext = useSidebar();
+  } catch (error) {
+    console.warn('AppHeader: SidebarProvider not found in context, using default values');
+  }
+  const { toggleSidebar, isMobile } = sidebarContext; 
 
   const title = pageTitles[pathname] || 'Story Spark';
 
@@ -59,6 +70,7 @@ export function AppHeader() {
               type="search"
               placeholder="Search saved stories..."
               className="h-9 w-full rounded-md bg-muted pl-9 md:w-[200px] lg:w-[300px]"
+              onChange={(e) => console.log(e.target.value)}
             />
           </div>
         )}

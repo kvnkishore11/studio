@@ -1,15 +1,11 @@
 // src/components/layout/app-layout.jsx
 "use client";
 
+import React from 'react';
 import { AppSidebar } from './app-sidebar';
 import { AppHeader } from './app-header';
-import { SidebarProvider, Sidebar, SidebarInset } from '@/components/ui/sidebar'; 
+import { SidebarProvider, Sidebar, SidebarInset } from '@/components/ui/sidebar'; // Using existing sidebar
 
-/**
- * Main application layout component
- * @param {Object} props - Component props
- * @param {React.ReactNode} props.children - Child components to render
- */
 export function AppLayout({ children }) {
   return (
     <SidebarProvider defaultOpen={true}>
