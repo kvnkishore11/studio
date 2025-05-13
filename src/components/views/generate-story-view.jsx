@@ -123,13 +123,13 @@ export function GenerateStoryView() {
     <div className="h-full flex flex-col space-y-8 animate-fadeIn">
       <div className="relative max-w-7xl mx-auto pt-0 pb-2 px-4">
         {/* Title spanning the full width */}
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-10 tracking-tighter text-foreground leading-tight text-center">
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tighter text-foreground leading-tight text-center">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-teal-500 to-purple-600 dark:from-blue-400 dark:via-teal-400 dark:to-purple-500">
             AI-Powered User Stories
           </span>
         </h1>
         
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 mb-16">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 mb-10">
           {/* Left side - Description */}
           <div className="w-full lg:w-1/2 text-left lg:pr-8">
             <p className="text-lg md:text-xl font-normal mb-8 text-muted-foreground leading-relaxed">
@@ -256,7 +256,7 @@ export function GenerateStoryView() {
         </div>
       </div>
       
-      <section className="py-0 mt-16 pt-8 animate-slideUp delay-100">
+      <section className="py-0 mt-8 pt-6 animate-slideUp delay-100">
         <h2 className="text-3xl font-bold text-center mb-8 text-foreground">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">How It Works</span>
         </h2>
