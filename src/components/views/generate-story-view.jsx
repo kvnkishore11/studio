@@ -32,8 +32,8 @@ export function GenerateStoryView() {
   const { openNewStoryDialog } = useApp();
 
   return (
-    <div className="h-full flex flex-col space-y-10 md:space-y-16 animate-fadeIn">
-      <div className="text-center max-w-4xl mx-auto pt-10 md:pt-16 pb-8">
+    <div className="h-full flex flex-col animate-fadeIn" style={{ gap: '0.5rem' }}>
+      <div className="text-center max-w-4xl mx-auto pt-0 pb-2">
         <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tighter text-foreground">
           <span className="bg-clip-text text-transparent bg-gradient-to-br from-primary via-accent to-purple-600 dark:to-purple-400">
             AI-Powered User Stories
@@ -56,11 +56,11 @@ export function GenerateStoryView() {
       </div>
       
       <section 
-        className="animate-slideInUp py-8 md:py-12" // Added padding for more space
+        className="animate-slideInUp py-0 mt-0" 
         style={{animationDelay: '0.2s'}}
       >
-        <h2 className="text-3xl font-bold text-center mb-4 text-foreground">How It Works</h2>
-        <p className="text-center text-muted-foreground mb-12 md:mb-16 max-w-xl mx-auto"> {/* Increased bottom margin */}
+        <h2 className="text-3xl font-bold text-center mb-1 text-foreground">How It Works</h2>
+        <p className="text-center text-muted-foreground mb-3 md:mb-4 max-w-xl mx-auto"> {/* Further reduced bottom margin */}
           Creating user stories is a simple, intuitive process with Story Genius. See our AI in action through these steps:
         </p>
         <HowItWorksAnimation />
