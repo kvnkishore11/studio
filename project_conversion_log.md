@@ -8,7 +8,7 @@
 2.  **Core Module Conversion (TS to JS)** (ID: 2, Status: done, Depends: 1)
 3.  **Component Conversion (TSX to JSX)** (ID: 3, Status: done, Depends: 1, 2)
 4.  **API/Server Conversion (TS to JS)** (ID: 4, Status: pending, Depends: 1, 2)
-5.  **Script/Tooling Conversion (TS to JS)** (ID: 5, Status: pending, Depends: 1)
+5.  **Script/Tooling Conversion (TS to JS)** (ID: 5, Status: done, Depends: 1)
 6.  **Testing & Validation** (ID: 6, Status: pending, Depends: 2, 3, 4, 5)
 7.  **Cleanup** (ID: 7, Status: pending, Depends: 6)
 
@@ -43,5 +43,9 @@
 **2024-08-21: Task 4: API/Server Conversion (TS to JS) (Completed)**
 *   Checked `src/app/api` directory.
 *   No TypeScript API routes were present, so no conversion was necessary.
+
+**2024-08-21: Task 5: Script/Tooling Conversion (TS to JS) (Completed)**
+*   Checked `scripts/` directory.
+*   No TypeScript scripts were present, so no conversion was necessary.
 
 *(Updates will be added below as tasks are completed)* 
