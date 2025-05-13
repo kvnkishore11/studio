@@ -150,12 +150,15 @@ export function HistoryView() {
       ) : (
         <>
           {/* Timeline View */}
-          <div className="relative border-l-2 border-purple-200 dark:border-purple-900 ml-4 md:ml-6 pl-6 md:pl-8">
+          <div className="relative pl-10">
+            {/* Vertical Timeline Line - Positioned absolutely to ensure perfect centering */}
+            <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-purple-200 dark:bg-purple-900"></div>
+            
             {paginatedItems.map((item, index) => (
               <div key={item.id} className="mb-8 relative">
-                {/* Timeline Dot */}
-                <div className="absolute -left-[29px] md:-left-[33px] top-0">
-                  <div className={`w-6 h-6 md:w-7 md:h-7 rounded-full flex items-center justify-center ${item.status === 'Draft' ? 'bg-slate-200 dark:bg-slate-700' : 'bg-purple-100 dark:bg-purple-900/50'}`}>
+                {/* Timeline Dot - Perfectly centered on the vertical line */}
+                <div className="absolute left-3 top-0 transform -translate-x-1/2">
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center ${item.status === 'Draft' ? 'bg-slate-200 dark:bg-slate-700' : 'bg-purple-100 dark:bg-purple-900/50'}`}>
                     <Check size={14} className={item.status === 'Draft' ? 'text-slate-500 dark:text-slate-400' : 'text-purple-600 dark:text-purple-400'} />
                   </div>
                 </div>
