@@ -1,4 +1,4 @@
-# **App Name**: Story Spark
+# **App Name**: Story Genius
 
 ## Core Features:
 

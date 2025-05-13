@@ -17,8 +17,8 @@ const fontDMSans = DM_Sans({
 });
 
 export const metadata = {
-  title: 'Story Spark',
-  description: 'AI-Powered User Story Generator',
+  title: 'Story Genius',
+  description: 'Generate user stories with AI',
 };
 
 export default function RootLayout({

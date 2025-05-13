@@ -61,7 +61,7 @@ export function GenerateStoryView() {
       >
         <h2 className="text-3xl font-bold text-center mb-4 text-foreground">How It Works</h2>
         <p className="text-center text-muted-foreground mb-12 md:mb-16 max-w-xl mx-auto"> {/* Increased bottom margin */}
-          Creating user stories is a simple, intuitive process with Story Spark. See our AI in action through these steps:
+          Creating user stories is a simple, intuitive process with Story Genius. See our AI in action through these steps:
         </p>
         <HowItWorksAnimation />
       </section>
@@ -69,7 +69,7 @@ export function GenerateStoryView() {
       <Card className="shadow-xl card-hover animate-slideInUp" style={{animationDelay: '0.4s'}}>
          <CardHeader>
           <CardTitle className="text-2xl md:text-3xl">Example Stories</CardTitle>
-          <p className="text-muted-foreground">See what Story Spark can generate for you.</p>
+          <p className="text-muted-foreground">See what Story Genius can generate for you.</p>
         </CardHeader>
         <CardContent className="p-0">
           <div className="overflow-x-auto">

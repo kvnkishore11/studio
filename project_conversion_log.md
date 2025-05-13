@@ -11,6 +11,7 @@
 5.  **Script/Tooling Conversion (TS to JS)** (ID: 5, Status: done, Depends: 1)
 6.  **Testing & Validation** (ID: 6, Status: pending, Depends: 2, 3, 4, 5)
 7.  **Cleanup** (ID: 7, Status: pending, Depends: 6)
+8.  **Rename 'Story Spark' to 'Story Genius'** (ID: 8, Status: done, Depends: 7)
 
 ---
 
@@ -47,5 +48,10 @@
 **2024-08-21: Task 5: Script/Tooling Conversion (TS to JS) (Completed)**
 *   Checked `scripts/` directory.
 *   No TypeScript scripts were present, so no conversion was necessary.
+
+**2024-08-21: Task 8: Rename 'Story Spark' to 'Story Genius' (Completed)**
+*   Searched for "Story Spark" (case-insensitive) in `.jsx`, `.js`, and `.md` files.
+*   Replaced occurrences in `src/components/views/generate-story-view.jsx`, `src/app/layout.jsx`, `src/components/loader.jsx`, and `docs/blueprint.md`.
+*   Updated `.cursor/rules/dev_workflow.mdc` to include a "Standard Change Implementation Workflow" section.
 
 *(Updates will be added below as tasks are completed)* 
