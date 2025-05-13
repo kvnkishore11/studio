@@ -7,10 +7,8 @@ import {
   Palette, 
   Shield, 
   Cpu, 
-  CreditCard, 
   Users, 
   HelpCircle,
-  LogOut,
   Settings as SettingsIcon,
   Save,
   Camera
@@ -37,7 +35,6 @@ const settingsNavItems = [
   { id: 'appearance', label: 'Appearance', icon: Palette },
   { id: 'security', label: 'Security', icon: Shield },
   { id: 'ai-settings', label: 'AI Settings', icon: Cpu },
-  { id: 'billing', label: 'Billing', icon: CreditCard },
   { id: 'team', label: 'Team', icon: Users },
   { id: 'help', label: 'Help & Support', icon: HelpCircle },
 ];
@@ -176,7 +173,6 @@ export function SettingsView() {
       case 'appearance':
       case 'security':
       case 'ai-settings':
-      case 'billing':
       case 'team':
       case 'help':
         return (
@@ -232,18 +228,15 @@ export function SettingsView() {
           ))}
         </nav>
         
-        <Separator className="my-4" />
-        
-        {/* Sign Out Button */}
-        <button className="w-full flex items-center px-3 py-2.5 text-sm rounded-lg text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors">
-          <LogOut size={18} className="mr-3 text-red-500 dark:text-red-400" />
-          Sign Out
-        </button>
       </div>
       
       {/* Main Content */}
       <div className="flex-1 p-8">
-        <h1 className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-6">Settings</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-8 tracking-tight text-center">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-purple-600 dark:to-purple-400">
+              Settings
+            </span>
+          </h1>
         
         {/* Content based on active section */}
         <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 p-6">

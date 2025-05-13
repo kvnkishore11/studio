@@ -72,7 +72,11 @@ export function SavedStoriesView() {
                  <BookOpen size={28} className="text-primary" />
             </div>
             <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-foreground tracking-tight">Saved Stories</h1>
+                <h1 className="text-4xl md:text-5xl font-bold mb-8 tracking-tight text-center">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-purple-600 dark:to-purple-400">
+              Saved Stories
+            </span>
+          </h1>
                 <p className="mt-1 text-muted-foreground">
                     Manage and review your collection of generated user stories.
                 </p>

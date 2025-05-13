@@ -107,7 +107,11 @@ export function HistoryView() {
 
   return (
     <div className="animate-fadeIn max-w-6xl mx-auto">
-      <h1 className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-6">Story Generation History</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-8 tracking-tight text-center">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-purple-600 dark:to-purple-400">
+              Story Generation History
+            </span>
+          </h1>
       
       {/* Search and Filter Bar */}
       <div className="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 mb-6 p-4 flex flex-col md:flex-row gap-4 items-center justify-between">

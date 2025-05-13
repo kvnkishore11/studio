@@ -123,7 +123,7 @@ export function GenerateStoryView() {
     <div className="h-full flex flex-col space-y-8 animate-fadeIn">
       <div className="relative max-w-7xl mx-auto pt-0 pb-2 px-4">
         {/* Title spanning the full width */}
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tighter text-foreground leading-tight text-center">
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-1 tracking-tighter text-foreground leading-tight text-center">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-teal-500 to-purple-600 dark:from-blue-400 dark:via-teal-400 dark:to-purple-500">
             AI-Powered User Stories
           </span>
