@@ -208,6 +208,61 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0;
 }
 
+/* Typing text animation for the first card */
+@keyframes typing-text {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-typing-text {
+  animation: typing-text 2.5s steps(20, end) forwards;
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* Slide right animation for the purple bars */
+@keyframes slide-right {
+  0% {
+    width: 0;
+    opacity: 0.7;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+.animate-slide-right {
+  animation: slide-right 2s ease-in-out infinite;
+  width: 0;
+}
+
+/* Draw checkmark animation */
+@keyframes draw-check {
+  0% {
+    stroke-dashoffset: 24;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+.animate-draw-check {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: draw-check 1.5s ease-out forwards;
+}
+
 .animation-delay-300 {
   animation-delay: 0.3s;
 }
