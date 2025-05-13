@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext } from 'react';
-import { AppContext } from '@/components/providers/app-provider'; // Path will need to be .js later
+import { AppContext } from '@/components/providers/app-provider.jsx';
 
 /**
  * Custom hook to access the app context.
