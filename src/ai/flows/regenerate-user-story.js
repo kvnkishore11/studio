@@ -11,14 +11,53 @@ import {ai} from '@/ai/genkit.js'; // Updated import path
 import {z} from 'genkit';
 // Import schemas from the central schemas.js file
 import { GenerateUserStoryInputSchema, GenerateUserStoryOutputSchema } from '../schemas.js';
+import { withRetry, logError, ErrorType, getUserFriendlyErrorMessage } from '@/lib/error-utils';
 
 /**
  * Regenerates a user story based on the provided input.
  * @param {z.infer<typeof GenerateUserStoryInputSchema>} input - The input data matching the schema.
- * @returns {Promise<z.infer<typeof GenerateUserStoryOutputSchema>>} The regenerated user story data.
+ * @returns {Promise<{success: boolean, data?: z.infer<typeof GenerateUserStoryOutputSchema>, error?: {type: string, message: string}}>} The result object with regenerated story data or error information.
  */
 export async function regenerateUserStory(input) {
-  return regenerateUserStoryFlow(input);
+  try {
+    // Validate input
+    if (!input || !input.title || !input.description) {
+      return {
+        success: false,
+        error: {
+          type: ErrorType.VALIDATION,
+          message: 'Title and description are required.'
+        }
+      };
+    }
+
+    // Use retry logic for the AI operation
+    const result = await withRetry(
+      async () => await regenerateUserStoryFlow(input),
+      {
+        maxAttempts: 3,
+        shouldRetry: (error) => {
+          // Don't retry validation errors
+          const errorType = error.type || ErrorType.UNKNOWN;
+          return errorType !== ErrorType.VALIDATION;
+        }
+      }
+    );
+
+    return {
+      success: true,
+      data: result
+    };
+  } catch (error) {
+    logError('regenerateUserStory', error);
+    return {
+      success: false,
+      error: {
+        type: error.type || ErrorType.UNKNOWN,
+        message: getUserFriendlyErrorMessage(error)
+      }
+    };
+  }
 }
 
 const regenerateUserStoryPrompt = ai.definePrompt({
@@ -46,8 +85,24 @@ const regenerateUserStoryFlow = ai.defineFlow(
     outputSchema: GenerateUserStoryOutputSchema, // Use imported schema
   },
   async input => {
-    const {output} = await regenerateUserStoryPrompt(input);
-    // Assuming output is guaranteed by Genkit if no error is thrown
-    return output;
+    try {
+      const {output} = await regenerateUserStoryPrompt(input);
+      
+      // Validate output
+      if (!output) {
+        throw new Error('AI returned empty response');
+      }
+      
+      // Validate required fields
+      if (!output.userStory || !output.acceptanceCriteria || !output.difficulty || !output.priority) {
+        throw new Error('AI response missing required fields');
+      }
+      
+      return output;
+    } catch (error) {
+      // Add context to the error
+      error.context = 'regenerateUserStoryFlow';
+      throw error;
+    }
   }
 ); 

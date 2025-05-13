@@ -7,11 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { RefreshCw, Zap, Save, Edit3, ThumbsUp, ThumbsDown, Check, X, Cpu, Loader2, Wand2 } from 'lucide-react';
+import { RefreshCw, Zap, Save, Edit3, ThumbsUp, ThumbsDown, Check, X, Cpu, Loader2, Wand2, AlertCircle } from 'lucide-react';
 import { useApp } from '@/hooks/use-app';
 import { generateUserStory } from '@/ai/flows/generate-user-story';
 import { regenerateUserStory } from '@/ai/flows/regenerate-user-story';
 import { cn } from '@/lib/utils';
+import { ErrorType } from '@/lib/error-utils';
 
 /**
  * Dialog component for creating new user stories with AI generation
@@ -31,6 +32,8 @@ export function NewStoryDialog() {
   const [storyTitle, setStoryTitle] = useState('');
   const [storyDescription, setStoryDescription] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [error, setError] = useState(null);
+  const [retryCount, setRetryCount] = useState(0);
 
   /**
    * Handles dialog close and resets form if no story is generated
@@ -41,6 +44,8 @@ export function NewStoryDialog() {
       setStoryTitle('');
       setStoryDescription('');
     }
+    setError(null);
+    setRetryCount(0);
   };
   
   /**
@@ -48,16 +53,27 @@ export function NewStoryDialog() {
    */
   const handleGenerate = async () => {
     if (!storyTitle.trim() || !storyDescription.trim()) return;
+    
     setIsGenerating(true);
+    setError(null);
+    
     try {
       const input = { title: storyTitle, description: storyDescription };
-      const result = await generateUserStory(input);
+      const response = await generateUserStory(input);
+      
+      if (!response.success) {
+        setError(response.error);
+        return;
+      }
+      
+      const result = response.data;
       setCurrentGeneratedStory({
         id: crypto.randomUUID(),
         title: storyTitle,
         ...result,
         timestamp: new Date().toISOString(),
       });
+      
       addHistoryItem({
         id: crypto.randomUUID(),
         title: storyTitle,
@@ -66,10 +82,18 @@ export function NewStoryDialog() {
         date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
         timestamp: new Date().toISOString(),
       });
-    } catch (error) {
-      console.error("Error generating story:", error);
+      
+      // Reset retry count on successful generation
+      setRetryCount(0);
+    } catch (err) {
+      console.error("Error generating story:", err);
+      setError({
+        type: ErrorType.UNKNOWN,
+        message: 'An unexpected error occurred. Please try again.'
+      });
+    } finally {
+      setIsGenerating(false);
     }
-    setIsGenerating(false);
   };
 
   /**
@@ -77,19 +101,37 @@ export function NewStoryDialog() {
    */
   const handleRegenerate = async () => {
     if (!currentGeneratedStory) return;
+    
     setIsGenerating(true);
+    setError(null);
+    
     try {
       const input = { title: currentGeneratedStory.title, description: storyDescription };
-      const result = await regenerateUserStory(input);
+      const response = await regenerateUserStory(input);
+      
+      if (!response.success) {
+        setError(response.error);
+        return;
+      }
+      
+      const result = response.data;
       setCurrentGeneratedStory({
         ...currentGeneratedStory,
         ...result,
         timestamp: new Date().toISOString(),
       });
-    } catch (error) {
-      console.error("Error regenerating story:", error);
+      
+      // Reset retry count on successful regeneration
+      setRetryCount(0);
+    } catch (err) {
+      console.error("Error regenerating story:", err);
+      setError({
+        type: ErrorType.UNKNOWN,
+        message: 'An unexpected error occurred. Please try again.'
+      });
+    } finally {
+      setIsGenerating(false);
     }
-    setIsGenerating(false);
   };
 
   /**
@@ -115,6 +157,22 @@ export function NewStoryDialog() {
       setStoryTitle(currentGeneratedStory.title);
     }
     setCurrentGeneratedStory(null);
+    setError(null);
+    setRetryCount(0);
+  };
+  
+  /**
+   * Handles retrying the operation after an error
+   */
+  const handleRetry = () => {
+    setRetryCount(prev => prev + 1);
+    setError(null);
+    
+    if (currentGeneratedStory) {
+      handleRegenerate();
+    } else {
+      handleGenerate();
+    }
   };
 
   return (
@@ -157,19 +215,45 @@ export function NewStoryDialog() {
                 />
               </div>
               
-              <div className="mb-6 p-5 rounded-xl bg-gradient-to-r from-primary/5 via-accent/5 to-purple-500/5 dark:from-primary/10 dark:via-accent/10 dark:to-purple-500/10 border border-primary/20">
-                <div className="flex items-start">
-                  <div className="p-2.5 rounded-lg bg-primary/10">
-                    <Cpu size={20} className="text-primary animate-icon-pulse" />
-                  </div>
-                  <div className="ml-4">
-                    <h4 className="font-medium text-foreground">AI Powered Story Generation</h4>
-                    <p className="text-sm mt-1 text-muted-foreground">
-                      Our AI will craft a complete user story with acceptance criteria and other crucial details.
-                    </p>
+              {error ? (
+                <div className="mb-6 p-5 rounded-xl bg-destructive/10 border border-destructive/20">
+                  <div className="flex items-start">
+                    <div className="p-2.5 rounded-lg bg-destructive/20">
+                      <AlertCircle size={20} className="text-destructive" />
+                    </div>
+                    <div className="ml-4">
+                      <h4 className="font-medium text-foreground">Error Generating Story</h4>
+                      <p className="text-sm mt-1 text-muted-foreground">
+                        {error.message}
+                      </p>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="mt-3 text-xs" 
+                        onClick={handleRetry}
+                        disabled={retryCount >= 3}
+                      >
+                        <RefreshCw size={14} className="mr-1" />
+                        {retryCount >= 3 ? 'Max retries reached' : 'Try Again'}
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="mb-6 p-5 rounded-xl bg-gradient-to-r from-primary/5 via-accent/5 to-purple-500/5 dark:from-primary/10 dark:via-accent/10 dark:to-purple-500/10 border border-primary/20">
+                  <div className="flex items-start">
+                    <div className="p-2.5 rounded-lg bg-primary/10">
+                      <Cpu size={20} className="text-primary animate-icon-pulse" />
+                    </div>
+                    <div className="ml-4">
+                      <h4 className="font-medium text-foreground">AI Powered Story Generation</h4>
+                      <p className="text-sm mt-1 text-muted-foreground">
+                        Our AI will craft a complete user story with acceptance criteria and other crucial details.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
               
               <DialogFooter className="mt-8 gap-2 sm:gap-0">
                 <DialogClose asChild>
