@@ -225,6 +225,24 @@ h1, h2, h3, h4, h5, h6 {
   white-space: nowrap;
 }
 
+/* Looping typing text animation */
+@keyframes typing-text-loop {
+  0%, 100% {
+    width: 0;
+  }
+  20%, 80% {
+    width: 100%;
+  }
+}
+
+.animate-typing-text-loop {
+  animation: typing-text-loop 6s steps(25, end) infinite;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid transparent;
+  width: 0;
+}
+
 /* Slide right animation for the purple bars */
 @keyframes slide-right {
   0% {
@@ -261,6 +279,30 @@ h1, h2, h3, h4, h5, h6 {
   stroke-dasharray: 24;
   stroke-dashoffset: 24;
   animation: draw-check 1.5s ease-out forwards;
+}
+
+/* Looping checkmark drawing animation */
+@keyframes draw-check-loop {
+  0%, 100% {
+    stroke-dashoffset: 24;
+    opacity: 0.3;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  40%, 60% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  90% {
+    opacity: 0.5;
+  }
+}
+
+.animate-draw-check-loop {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: draw-check-loop 4s ease-in-out infinite;
 }
 
 /* Fade in animation for text */

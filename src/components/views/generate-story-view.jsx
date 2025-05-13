@@ -268,7 +268,11 @@ export function GenerateStoryView() {
               <div className="p-6 flex flex-col items-center h-full">
                 {/* Icon Circle */}
                 <div className="w-12 h-12 rounded-full bg-white dark:bg-blue-900/20 flex items-center justify-center mb-3 shadow-sm border border-blue-100 dark:border-blue-800/30">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500 dark:text-blue-400"><path d="M17 6.1H3"></path><path d="M21 12.1H3"></path><path d="M15.1 18H3"></path></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500 dark:text-blue-400">
+                    <path d="M4 6h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 18h16"></path>
+                  </svg>
                 </div>
                 
                 {/* Title */}
@@ -282,7 +286,7 @@ export function GenerateStoryView() {
                     T
                   </div>
                   <div className="text-center text-xs text-slate-400 dark:text-slate-500 mb-4 h-4 overflow-hidden">
-                    <span className="animate-typing-text inline-block whitespace-nowrap w-0">Enter title & descript</span>
+                    <span className="animate-typing-text-loop inline-block whitespace-nowrap">Enter title & description</span>
                   </div>
                   
                   <div className="mt-1 w-[120px] h-[28px] rounded-md border border-dashed border-slate-200 dark:border-slate-700 flex items-center justify-center cursor-pointer hover:bg-white/50 dark:hover:bg-slate-800/30 transition-colors">
@@ -300,7 +304,9 @@ export function GenerateStoryView() {
               <div className="p-6 flex flex-col items-center h-full">
                 {/* Icon Circle */}
                 <div className="w-12 h-12 rounded-full bg-white dark:bg-purple-900/20 flex items-center justify-center mb-3 shadow-sm border border-purple-100 dark:border-purple-800/30">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-500 dark:text-purple-400"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-500 dark:text-purple-400">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                  </svg>
                 </div>
                 
                 {/* Title */}
@@ -336,7 +342,11 @@ export function GenerateStoryView() {
               <div className="p-6 flex flex-col items-center h-full">
                 {/* Icon Circle */}
                 <div className="w-12 h-12 rounded-full bg-white dark:bg-green-900/20 flex items-center justify-center mb-3 shadow-sm border border-green-100 dark:border-green-800/30">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 dark:text-green-400"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 dark:text-green-400">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
                 </div>
                 
                 {/* Title */}
@@ -347,7 +357,7 @@ export function GenerateStoryView() {
                 {/* Content */}
                 <div className="w-full flex flex-col items-center flex-grow justify-center">
                   <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/20 flex items-center justify-center mb-3 animate-check-appear">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 dark:text-green-400 animate-draw-check"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 dark:text-green-400 animate-draw-check-loop"><polyline points="20 6 9 17 4 12"></polyline></svg>
                   </div>
                   
                   <div className="text-center">
