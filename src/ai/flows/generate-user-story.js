@@ -9,27 +9,13 @@
 
 import {ai} from '@/ai/genkit.js'; // Updated import path
 import {z} from 'genkit';
-
-export const GenerateUserStoryInputSchema = z.object({
-  title: z.string().describe('The title of the feature.'),
-  description: z.string().describe('A brief description of the feature.'),
-});
-// Removed TS type export: GenerateUserStoryInput
-
-export const GenerateUserStoryOutputSchema = z.object({
-  userStory: z.string().describe('A complete user story.'),
-  acceptanceCriteria: z.array(z.string()).describe('Acceptance criteria for the user story.'),
-  additionalNotes: z.string().describe('Additional notes or details about the feature.'),
-  difficulty: z.enum(['Easy', 'Medium', 'Hard']).describe('The difficulty of implementing the feature.'),
-  priority: z.enum(['High', 'Medium', 'Low']).describe('The priority of the feature.'),
-  estimatedTime: z.string().describe('Estimated time to complete the feature.'),
-});
-// Removed TS type export: GenerateUserStoryOutput
+// Import schemas from the new file
+import { GenerateUserStoryInputSchema, GenerateUserStoryOutputSchema } from '../schemas.js';
 
 /**
  * Generates a user story based on the provided input.
- * @param {z.infer<GenerateUserStoryInputSchema>} input - The input data matching the schema.
- * @returns {Promise<z.infer<GenerateUserStoryOutputSchema>>} The generated user story data.
+ * @param {z.infer<typeof GenerateUserStoryInputSchema>} input - The input data matching the schema.
+ * @returns {Promise<z.infer<typeof GenerateUserStoryOutputSchema>>} The generated user story data.
  */
 export async function generateUserStory(input) {
   return generateUserStoryFlow(input);
