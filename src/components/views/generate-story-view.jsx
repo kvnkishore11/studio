@@ -269,9 +269,8 @@ export function GenerateStoryView() {
                 {/* Icon Circle */}
                 <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center mb-3 shadow-sm border border-blue-100 dark:border-blue-800/30">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500 dark:text-blue-400">
-                    <path d="M4 6h16"></path>
-                    <path d="M4 12h16"></path>
-                    <path d="M4 18h16"></path>
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                   </svg>
                 </div>
                 
@@ -305,7 +304,9 @@ export function GenerateStoryView() {
                 {/* Icon Circle */}
                 <div className="w-10 h-10 rounded-full bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center mb-3 shadow-sm border border-purple-100 dark:border-purple-800/30">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-purple-500 dark:text-purple-400">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
                   </svg>
                 </div>
                 
@@ -316,6 +317,7 @@ export function GenerateStoryView() {
                 
                 {/* Content */}
                 <div className="w-full flex flex-col items-center flex-grow justify-center">
+                  <div className="text-purple-500 dark:text-purple-400 text-3xl mb-3 font-light opacity-0">T</div>
                   <div className="w-full max-w-[160px] mx-auto space-y-3 mb-4">
                     <div className="h-2 w-full relative overflow-hidden">
                       <div className="absolute left-0 top-0 h-full bg-purple-400 dark:bg-purple-500 rounded-full animate-slide-right"></div>
@@ -343,9 +345,8 @@ export function GenerateStoryView() {
                 {/* Icon Circle */}
                 <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/20 flex items-center justify-center mb-3 shadow-sm border border-green-100 dark:border-green-800/30">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 dark:text-green-400">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
                   </svg>
                 </div>
                 
@@ -356,6 +357,7 @@ export function GenerateStoryView() {
                 
                 {/* Content */}
                 <div className="w-full flex flex-col items-center flex-grow justify-center">
+                  <div className="text-green-500 dark:text-green-400 text-3xl mb-3 font-light opacity-0">T</div>
                   <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/20 flex items-center justify-center mb-3 animate-check-appear">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 dark:text-green-400 animate-draw-check-loop"><polyline points="20 6 9 17 4 12"></polyline></svg>
                   </div>
