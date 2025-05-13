@@ -2,12 +2,15 @@
 
 import React from 'react'; 
 import { Zap, ArrowRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/hooks/use-app';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import Image from 'next/image';
-import { HowItWorksAnimation } from '@/components/how-it-works-animation'; 
+import { HowItWorksAnimation } from '@/components/how-it-works-animation';
+import { fadeVariants, slideUpVariants, staggerContainer, listItemVariants } from '@/lib/animation-utils';
+import { useReducedMotion } from '@/lib/use-reduced-motion'; 
 
 const exampleStories = [
   { 
@@ -30,10 +33,32 @@ const exampleStories = [
 
 export function GenerateStoryView() {
   const { openNewStoryDialog } = useApp();
+  const prefersReducedMotion = useReducedMotion();
+  
+  // Define the container variants for staggered children animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: prefersReducedMotion ? 0 : 0.2,
+        delayChildren: prefersReducedMotion ? 0 : 0.1,
+        duration: 0.6,
+        ease: [0.215, 0.61, 0.355, 1]
+      }
+    }
+  };
 
   return (
-    <div className="h-full flex flex-col animate-fadeIn" style={{ gap: '0.5rem' }}>
-      <div className="text-center max-w-4xl mx-auto pt-0 pb-2">
+    <motion.div 
+      className="h-full flex flex-col" 
+      style={{ gap: '0.5rem' }}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible">
+      <motion.div 
+        className="text-center max-w-4xl mx-auto pt-0 pb-2"
+        variants={fadeVariants}>
         <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tighter text-foreground">
           <span className="bg-clip-text text-transparent bg-gradient-to-br from-primary via-accent to-purple-600 dark:to-purple-400">
             AI-Powered User Stories
@@ -53,20 +78,21 @@ export function GenerateStoryView() {
             Generate Your First Story
           </Button>
         </div>
-      </div>
+      </motion.div>
       
-      <section 
-        className="animate-slideInUp py-0 mt-0" 
-        style={{animationDelay: '0.2s'}}
+      <motion.section 
+        className="py-0 mt-0" 
+        variants={slideUpVariants}
       >
         <h2 className="text-3xl font-bold text-center mb-1 text-foreground">How It Works</h2>
         <p className="text-center text-muted-foreground mb-3 md:mb-4 max-w-xl mx-auto"> {/* Further reduced bottom margin */}
           Creating user stories is a simple, intuitive process with Story Genius. See our AI in action through these steps:
         </p>
         <HowItWorksAnimation />
-      </section>
+      </motion.section>
       
-      <Card className="shadow-xl card-hover animate-slideInUp" style={{animationDelay: '0.4s'}}>
+      <motion.div variants={slideUpVariants}>
+        <Card className="shadow-xl card-hover">
          <CardHeader>
           <CardTitle className="text-2xl md:text-3xl">Example Stories</CardTitle>
           <p className="text-muted-foreground">See what Story Genius can generate for you.</p>
@@ -94,8 +120,11 @@ export function GenerateStoryView() {
           </div>
         </CardContent>
       </Card>
+      </motion.div>
       
-      <div className="rounded-2xl p-8 md:p-12 bg-gradient-to-tr from-primary/10 via-accent/5 to-purple-500/5 dark:from-primary/20 dark:via-accent/10 dark:to-purple-500/10 border border-primary/20 card-hover animate-slideInUp" style={{animationDelay: '0.6s'}}>
+      <motion.div 
+        className="rounded-2xl p-8 md:p-12 bg-gradient-to-tr from-primary/10 via-accent/5 to-purple-500/5 dark:from-primary/20 dark:via-accent/10 dark:to-purple-500/10 border border-primary/20 card-hover" 
+        variants={slideUpVariants}>
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="flex items-center mb-6 md:mb-0 md:mr-8">
             <div className="mr-5 flex-shrink-0">
@@ -119,7 +148,7 @@ export function GenerateStoryView() {
             </Button>
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 } 

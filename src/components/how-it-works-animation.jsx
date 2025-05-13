@@ -1,8 +1,11 @@
 "use client";
 
 import React from 'react';
+import { motion } from 'framer-motion';
 import { MessageSquare, Cpu, Save, MousePointerClick, Type, CheckCircle } from 'lucide-react';
 import { cn } from '@/lib/utils.js';
+import { useReducedMotion } from '@/lib/use-reduced-motion';
+import { fadeVariants, slideUpVariants, staggerContainer } from '@/lib/animation-utils';
 
 const animationStepsData = [
   {
@@ -15,20 +18,48 @@ const animationStepsData = [
     ringColor: 'ring-blue-500/20',
     elements: (
       <>
-        <Type size={32} className="mb-2 opacity-60 text-blue-500/80 animate-icon-pulse" />
-        <p
-            className="text-xs text-muted-foreground animate-typewriter-text"
+        <motion.div
+          animate={{ 
+            scale: [1, 1.1, 1],
+            opacity: [0.6, 0.8, 0.6]
+          }}
+          transition={{ 
+            duration: 2, 
+            repeat: Infinity,
+            ease: "easeInOut" 
+          }}
+        >
+          <Type size={32} className="mb-2 opacity-60 text-blue-500/80" />
+        </motion.div>
+        <motion.p
+            className="text-xs text-muted-foreground"
             style={{
               fontFamily: 'monospace',
-              animationDuration: '2s, 0.75s',
-              animationIterationCount: 'infinite, infinite',
-              animationTimingFunction: 'steps(28, end), step-end',
+            }}
+            animate={{
+              width: [0, '100%', '100%', 0],
+              borderRight: ['1px solid transparent', '1px solid currentColor', '1px solid currentColor', '1px solid transparent'],
+            }}
+            transition={{
+              duration: 4,
+              times: [0, 0.4, 0.8, 1],
+              repeat: Infinity,
+              ease: "steps(28)"
             }}
         >
             Enter title &amp; description...
-        </p>
+        </motion.p>
         <div className="mt-3 w-32 h-12 bg-card border-2 border-dashed border-border rounded-lg flex items-center justify-center shadow-inner">
-            <MousePointerClick size={18} className="text-muted-foreground/70 animate-icon-bob" style={{animationDuration: '1.5s'}}/>
+            <motion.div
+              animate={{ y: ["-5px", "5px", "-5px"] }}
+              transition={{ 
+                duration: 1.5, 
+                repeat: Infinity,
+                ease: "easeInOut" 
+              }}
+            >
+              <MousePointerClick size={18} className="text-muted-foreground/70" />
+            </motion.div>
             <span className="ml-2 text-xs text-muted-foreground/70">Click Generate</span>
         </div>
       </>
@@ -46,13 +77,39 @@ const animationStepsData = [
       <>
         <div className="w-full max-w-[120px] space-y-2.5">
             <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-                <div className="w-1/3 h-full bg-purple-500 animate-ai-progress-bar" style={{animationDuration: '1.3s'}}></div>
+                <motion.div 
+                  className="w-1/3 h-full bg-purple-500" 
+                  animate={{ x: ["-100%", "200%"] }}
+                  transition={{ 
+                    duration: 1.3, 
+                    repeat: Infinity,
+                    ease: "easeInOut" 
+                  }}
+                ></motion.div>
             </div>
             <div className="w-3/4 h-1.5 bg-muted rounded-full overflow-hidden mx-auto">
-                <div className="w-1/2 h-full bg-purple-500 animate-ai-progress-bar" style={{animationDelay: '0.2s', animationDuration: '1.5s'}}></div>
+                <motion.div 
+                  className="w-1/2 h-full bg-purple-500" 
+                  animate={{ x: ["-100%", "200%"] }}
+                  transition={{ 
+                    duration: 1.5, 
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.2
+                  }}
+                ></motion.div>
             </div>
              <div className="w-full h-1.5 bg-muted rounded-full overflow-hidden">
-                <div className="w-1/4 h-full bg-purple-500 animate-ai-progress-bar" style={{animationDelay: '0.4s', animationDuration: '1.2s'}}></div>
+                <motion.div 
+                  className="w-1/4 h-full bg-purple-500" 
+                  animate={{ x: ["-100%", "400%"] }}
+                  transition={{ 
+                    duration: 1.2, 
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 0.4
+                  }}
+                ></motion.div>
             </div>
         </div>
         <p className="text-xs text-muted-foreground mt-3.5">Crafting story details...</p>
@@ -69,9 +126,36 @@ const animationStepsData = [
     ringColor: 'ring-green-500/20',
     elements: (
       <>
-        <CheckCircle size={36} className="mb-1.5 text-green-500 animate-tick-emphasis" style={{animationDelay: '0.1s'}}/>
-        <p className="text-xs text-muted-foreground animate-text-focus-in" style={{animationDelay: '0.3s'}}>Your story is ready!</p>
-        <p className="text-xs text-muted-foreground animate-text-focus-in" style={{animationDelay: '0.5s'}}>Save it to your collection.</p>
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ 
+            scale: [0.8, 1.2, 1],
+            opacity: [0, 1, 1]
+          }}
+          transition={{ 
+            duration: 0.5, 
+            delay: 0.1,
+            ease: "easeOut" 
+          }}
+        >
+          <CheckCircle size={36} className="mb-1.5 text-green-500" />
+        </motion.div>
+        <motion.p 
+          className="text-xs text-muted-foreground" 
+          initial={{ opacity: 0, filter: "blur(4px)" }}
+          animate={{ opacity: 1, filter: "blur(0px)" }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+        >
+          Your story is ready!
+        </motion.p>
+        <motion.p 
+          className="text-xs text-muted-foreground" 
+          initial={{ opacity: 0, filter: "blur(4px)" }}
+          animate={{ opacity: 1, filter: "blur(0px)" }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+        >
+          Save it to your collection.
+        </motion.p>
       </>
     ),
   },
@@ -81,19 +165,50 @@ const animationStepsData = [
  * Renders an animated sequence explaining the "How it Works" steps.
  */
 export function HowItWorksAnimation() {
+  const prefersReducedMotion = useReducedMotion();
+  // Define container variants for staggered animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: prefersReducedMotion ? 0 : 0.15,
+        delayChildren: 0.1,
+        duration: 0.5
+      }
+    }
+  };
+
+  // Define item variants
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.215, 0.61, 0.355, 1]
+      }
+    }
+  };
+
   return (
-    <div className="flex flex-col md:flex-row gap-6 items-stretch justify-center w-full px-4 md:px-0">
+    <motion.div 
+      className="flex flex-col md:flex-row gap-6 items-stretch justify-center w-full px-4 md:px-0"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible">
       {animationStepsData.map((step, index) => {
         const IconComponent = step.icon;
         return (
-          <div
+          <motion.div
             key={step.id}
             className={cn(
-              "w-full md:w-1/3 rounded-2xl p-6 flex flex-col items-center justify-start text-center shadow-xl border animate-slideInUp card-hover",
+              "w-full md:w-1/3 rounded-2xl p-6 flex flex-col items-center justify-start text-center shadow-xl border card-hover",
               `bg-gradient-to-br ${step.bgColorStops}`,
               step.borderColor
             )}
-            style={{ animationDelay: `${index * 150}ms`, animationFillMode: 'forwards' }}
+            variants={itemVariants}
           >
             <div className={cn(
               "mb-5 flex items-center justify-center w-20 h-20 rounded-full ring-4",
@@ -115,9 +230,9 @@ export function HowItWorksAnimation() {
             <div className="min-h-[7rem] flex flex-col items-center justify-center w-full">
                 {step.elements}
             </div>
-          </div>
+          </motion.div>
         );
       })}
-    </div>
+    </motion.div>
   );
 } 
