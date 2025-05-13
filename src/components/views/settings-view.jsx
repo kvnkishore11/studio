@@ -9,7 +9,6 @@ import {
   Cpu, 
   Users, 
   HelpCircle,
-  Settings as SettingsIcon,
   Save,
   Camera
 } from 'lucide-react';
@@ -44,12 +43,8 @@ export function SettingsView() {
   const [userData, setUserData] = useState(mockUser);
   
   // Safely try to use the useApp hook, but provide fallback values if it fails
-  let appContext = { 
-    themeMode: 'light'
-  };
-  
   try {
-    appContext = useApp();
+    useApp();
   } catch (error) {
     console.warn('SettingsView: AppProvider not found in context, using default values');
   }

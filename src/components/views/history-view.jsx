@@ -7,7 +7,7 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useApp } from '@/hooks/use-app';
-import Link from 'next/link';
+
 
 // Mock data for story history
 const mockHistoryItems = [
@@ -69,13 +69,8 @@ const mockHistoryItems = [
 
 export function HistoryView() {
   // Safely try to use the useApp hook, but provide fallback values if it fails
-  let appContext = { 
-    historyItems: [],
-    themeMode: 'light'
-  };
-  
   try {
-    appContext = useApp();
+    useApp();
   } catch (error) {
     console.warn('HistoryView: AppProvider not found in context, using default values');
   }
@@ -158,7 +153,7 @@ export function HistoryView() {
             {/* Vertical Timeline Line */}
             <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-purple-200 dark:bg-purple-900"></div>
             
-            {paginatedItems.map((item, index) => (
+            {paginatedItems.map((item) => (
               <div key={item.id} className="mb-8 relative pl-16 pb-2">
                 {/* Timeline Dot */}
                 <div className="absolute left-6 top-0 transform -translate-x-1/2">

@@ -5,11 +5,11 @@ import { Plus, Filter, ChevronDown, Copy, Edit3, Trash2, BookOpen, Search } from
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { useApp } from '@/hooks/use-app';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import Link from 'next/link';
+
 import { cn } from '@/lib/utils';
 
 export function SavedStoriesView() {

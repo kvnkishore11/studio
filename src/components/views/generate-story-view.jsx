@@ -168,8 +168,6 @@ export function GenerateStoryView() {
                 // Calculate position based on index relative to active index
                 const position = (index - activeStoryIndex + exampleStories.length) % exampleStories.length;
                 const isActive = position === 0;
-                const zIndex = exampleStories.length - position;
-                
                 // Different styles based on position
                 let cardStyles = {};
                 let opacity = 1;
