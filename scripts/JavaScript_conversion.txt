@@ -1,0 +1,53 @@
+<context>
+# Overview
+This document outlines the requirements for converting the existing TypeScript project codebase entirely to standard JavaScript (ESNext). The goal is to remove the TypeScript dependency and simplify the build process, while maintaining equivalent functionality. This conversion aims to improve build times and potentially broaden contributor accessibility.
+
+# Core Requirements
+- **Complete Conversion:** All `.ts` and `.tsx` files within the project must be converted to `.js` and `.jsx` respectively.
+- **Type Removal:** All TypeScript-specific syntax (type annotations, interfaces, enums, generics, etc.) must be removed or replaced with standard JavaScript equivalents (e.g., using JSDoc for type hinting if desired, replacing enums with plain objects).
+- **Functionality Preservation:** The converted JavaScript code must retain the exact same functionality as the original TypeScript code. Existing tests should pass after conversion.
+- **Dependency Update:** Project dependencies related to TypeScript (`typescript`, `@types/*`, `ts-node`, etc.) must be removed from `package.json`. Dependencies might need updates if their usage relied heavily on TS features.
+- **Build Process Update:** Any build scripts, configuration files (`tsconfig.json`), or CI/CD pipeline steps related to TypeScript compilation must be updated or removed to work directly with JavaScript. `tsconfig.json` should likely be replaced with `jsconfig.json` if needed.
+- **Import/Export Syntax:** Ensure all module imports and exports use standard JavaScript syntax (ESM or CommonJS, depending on project configuration). Remove `import type` statements.
+
+# User Experience
+- The end-user experience of the application should remain completely unchanged. This is purely a technical refactoring effort.
+
+</context>
+<PRD>
+# Technical Architecture
+- **Language:** Standard JavaScript (ESNext syntax). JSDoc is permissible for documentation and basic type hinting but not required.
+- **File Extensions:** `.js` for standard JavaScript files, `.jsx` for files containing JSX syntax.
+- **Module System:** Maintain the existing module system (likely ESM or CommonJS, check `package.json` type field or build config).
+- **Configuration:** Replace `tsconfig.json` with `jsconfig.json` if necessary for editor support or path aliasing. Update relevant sections in `package.json` (e.g., `scripts`, `main`, `module`, `types` fields).
+- **Testing:** Existing test suites (Jest, Vitest, etc.) must be configured to run against the JavaScript source files. Tests must pass post-conversion.
+
+# Development Roadmap (Task Breakdown Strategy)
+1.  **Setup & Configuration:**
+    *   Update/remove TypeScript dependencies.
+    *   Remove `tsconfig.json`, create `jsconfig.json` if needed.
+    *   Update build/dev scripts in `package.json`.
+    *   Configure testing framework for JS.
+2.  **Core Module Conversion:** Convert core utility functions, modules, or foundational code.
+3.  **Component Conversion (if applicable):** Convert UI components (e.g., React, Vue, Svelte).
+4.  **API/Server Conversion (if applicable):** Convert backend logic, API endpoints, server setup.
+5.  **Script/Tooling Conversion:** Convert any internal scripts or tooling files.
+6.  **Testing & Validation:** Run full test suite, perform manual testing to ensure functional equivalence.
+7.  **Cleanup:** Remove any leftover TS artifacts.
+
+# Logical Dependency Chain
+- Configuration changes (dependencies, build scripts, `jsconfig.json`) should generally happen first.
+- Core/utility modules often need to be converted before modules that depend on them.
+- Conversion can proceed module by module or feature by feature, ensuring tests pass at each stage.
+- Final testing occurs after all files are converted.
+
+# Risks and Mitigations
+- **Subtle Bugs:** Removing types might introduce subtle runtime errors. Mitigation: Thorough testing (unit, integration, E2E), careful code review during conversion.
+- **Build/Tooling Issues:** Build or development tooling might break. Mitigation: Test build/dev server frequently during conversion, consult documentation for JS configurations.
+- **Loss of Type Safety:** Developers lose compile-time type checking. Mitigation: Encourage use of JSDoc where beneficial, rely heavily on automated tests.
+- **Time Estimate:** Conversion can be time-consuming. Mitigation: Break down into small, manageable tasks (Task Master will handle this).
+
+# Appendix
+- Reference current `tsconfig.json` for path aliases or specific compiler options that might need equivalent JS configuration.
+- Reference `package.json` for current dependencies and build scripts.
+</PRD> 

@@ -6,7 +6,7 @@
 
 1.  **Setup & Configuration for JS Conversion** (ID: 1, Status: done)
 2.  **Core Module Conversion (TS to JS)** (ID: 2, Status: done, Depends: 1)
-3.  **Component Conversion (TSX to JSX)** (ID: 3, Status: pending, Depends: 1, 2)
+3.  **Component Conversion (TSX to JSX)** (ID: 3, Status: done, Depends: 1, 2)
 4.  **API/Server Conversion (TS to JS)** (ID: 4, Status: pending, Depends: 1, 2)
 5.  **Script/Tooling Conversion (TS to JS)** (ID: 5, Status: pending, Depends: 1)
 6.  **Testing & Validation** (ID: 6, Status: pending, Depends: 2, 3, 4, 5)
@@ -33,5 +33,11 @@
 *   Converted `src/ai/genkit.ts` -> `.js`.
 *   Converted `src/ai/flows/generate-user-story.ts` -> `.js`.
 *   Converted `src/ai/flows/regenerate-user-story.ts` -> `.js`.
+
+**2024-08-21: Task 3: Component Conversion (TSX to JSX) (Completed)**
+*   Converted components in `src/components` (including `ui/` and `views/`) and `src/app` (including `history/`, `saved-stories/`, `settings/`, `templates/`) from `.tsx` to `.jsx`.
+*   Removed TypeScript syntax (types, interfaces).
+*   Updated imports to use `.jsx` or omit extension.
+*   Deleted original `.tsx` files.
 
 *(Updates will be added below as tasks are completed)* 
