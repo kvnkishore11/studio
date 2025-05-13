@@ -263,27 +263,72 @@ export function GenerateStoryView() {
         <p className="text-center text-muted-foreground mb-8 max-w-xl mx-auto">
           Creating user stories is a simple, intuitive process with Story Spark. See our AI in action through these steps:
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          <div className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 p-6 rounded-xl shadow-lg border border-blue-100 dark:border-blue-800 transition-all duration-500 hover:shadow-xl hover:translate-y-[-5px]">
-            <div className="flex justify-center items-center w-16 h-16 mx-auto mb-4 rounded-full bg-blue-100 dark:bg-blue-800/30">
-              <Zap className="h-8 w-8 text-blue-500 dark:text-blue-400" />
+        <div className="flex flex-col md:flex-row justify-center gap-6 max-w-5xl mx-auto px-4">
+          {/* Card 1 - Describe */}
+          <div className="bg-blue-50/50 dark:bg-blue-950/20 p-6 rounded-xl shadow-md border border-blue-100 dark:border-blue-900/30 w-full md:w-1/3 aspect-[4/5] md:aspect-[3/4] flex flex-col items-center transition-all duration-300 hover:shadow-lg">
+            <div className="flex justify-center items-center w-16 h-16 mb-4 rounded-full bg-white dark:bg-blue-900/20 shadow-sm border border-blue-100 dark:border-blue-800/30">
+              <div className="text-blue-500 dark:text-blue-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 6.1H3"></path><path d="M21 12.1H3"></path><path d="M15.1 18H3"></path></svg>
+              </div>
             </div>
-            <h3 className="text-xl font-bold mb-2 text-center">1. Describe Your Feature</h3>
-            <p className="text-center">Enter a brief description of the feature you want to implement.</p>
+            <h3 className="text-lg font-medium mb-6 text-center text-blue-600 dark:text-blue-400">1. Describe Your Feature</h3>
+            
+            <div className="w-full max-w-[200px] h-32 bg-white dark:bg-blue-900/10 rounded-md border border-blue-100 dark:border-blue-800/30 p-3 flex flex-col items-center justify-center">
+              <div className="w-8 h-8 mb-2 text-blue-300 dark:text-blue-500 mx-auto">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 6.1H3"></path><path d="M21 12.1H3"></path><path d="M15.1 18H3"></path></svg>
+              </div>
+              <div className="w-full">
+                <div className="h-2 w-3/4 bg-blue-200 dark:bg-blue-700/50 rounded mb-2 mx-auto animate-pulse"></div>
+                <div className="h-2 w-1/2 bg-blue-200 dark:bg-blue-700/50 rounded mx-auto animate-pulse delay-75"></div>
+              </div>
+            </div>
+            
+            <div className="mt-4 bg-white dark:bg-blue-900/20 rounded-md py-2 px-4 border border-blue-100 dark:border-blue-800/30 flex items-center space-x-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-blue-500"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              <span className="text-sm text-blue-600 dark:text-blue-400">Click Generate</span>
+            </div>
           </div>
-          <div className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 p-6 rounded-xl shadow-lg border border-purple-100 dark:border-purple-800 transition-all duration-500 hover:shadow-xl hover:translate-y-[-5px]">
-            <div className="flex justify-center items-center w-16 h-16 mx-auto mb-4 rounded-full bg-purple-100 dark:bg-purple-800/30">
-              <ArrowRight className="h-8 w-8 text-purple-500 dark:text-purple-400" />
+          
+          {/* Card 2 - Generate */}
+          <div className="bg-purple-50/50 dark:bg-purple-950/20 p-6 rounded-xl shadow-md border border-purple-100 dark:border-purple-900/30 w-full md:w-1/3 aspect-[4/5] md:aspect-[3/4] flex flex-col items-center transition-all duration-300 hover:shadow-lg">
+            <div className="flex justify-center items-center w-16 h-16 mb-4 rounded-full bg-white dark:bg-purple-900/20 shadow-sm border border-purple-100 dark:border-purple-800/30">
+              <div className="text-purple-500 dark:text-purple-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+              </div>
             </div>
-            <h3 className="text-xl font-bold mb-2 text-center">2. Generate Story</h3>
-            <p className="text-center">Our AI analyzes your description and generates a comprehensive user story.</p>
+            <h3 className="text-lg font-medium mb-6 text-center text-purple-600 dark:text-purple-400">2. AI Generates Story</h3>
+            
+            <div className="w-full max-w-[200px] h-32 bg-white dark:bg-purple-900/10 rounded-md border border-purple-100 dark:border-purple-800/30 p-3 flex flex-col items-center justify-center">
+              <div className="w-full space-y-2">
+                <div className="h-2 w-full bg-purple-300 dark:bg-purple-700/50 rounded animate-typing"></div>
+                <div className="h-2 w-5/6 bg-purple-200 dark:bg-purple-700/40 rounded animate-typing animation-delay-300"></div>
+                <div className="h-2 w-4/6 bg-purple-100 dark:bg-purple-700/30 rounded animate-typing animation-delay-600"></div>
+              </div>
+            </div>
+            
+            <div className="mt-4 text-sm text-purple-600 dark:text-purple-400 text-center">
+              <div className="animate-pulse">Crafting story details...</div>
+            </div>
           </div>
-          <div className="bg-gradient-to-br from-pink-50 to-orange-50 dark:from-pink-900/20 dark:to-orange-900/20 p-6 rounded-xl shadow-lg border border-pink-100 dark:border-pink-800 transition-all duration-500 hover:shadow-xl hover:translate-y-[-5px]">
-            <div className="flex justify-center items-center w-16 h-16 mx-auto mb-4 rounded-full bg-pink-100 dark:bg-pink-800/30">
-              <BookOpen className="h-8 w-8 text-pink-500 dark:text-pink-400" />
+          
+          {/* Card 3 - Save */}
+          <div className="bg-green-50/50 dark:bg-green-950/20 p-6 rounded-xl shadow-md border border-green-100 dark:border-green-900/30 w-full md:w-1/3 aspect-[4/5] md:aspect-[3/4] flex flex-col items-center transition-all duration-300 hover:shadow-lg">
+            <div className="flex justify-center items-center w-16 h-16 mb-4 rounded-full bg-white dark:bg-green-900/20 shadow-sm border border-green-100 dark:border-green-800/30">
+              <div className="text-green-500 dark:text-green-400">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
             </div>
-            <h3 className="text-xl font-bold mb-2 text-center">3. Refine & Save</h3>
-            <p className="text-center">Review the generated story, make any necessary adjustments, and save it.</p>
+            <h3 className="text-lg font-medium mb-6 text-center text-green-600 dark:text-green-400">3. Review &amp; Save</h3>
+            
+            <div className="w-full max-w-[200px] h-32 bg-white dark:bg-green-900/10 rounded-md border border-green-100 dark:border-green-800/30 p-3 flex flex-col items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-800/30 flex items-center justify-center mb-2 animate-check-appear">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 dark:text-green-400 animate-check-mark"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div className="text-center">
+                <div className="text-sm font-medium text-green-600 dark:text-green-400">Your story is ready!</div>
+                <div className="text-xs text-green-500/70 dark:text-green-500/50 mt-1">Save it to your collection.</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
