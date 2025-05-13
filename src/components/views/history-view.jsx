@@ -150,14 +150,14 @@ export function HistoryView() {
       ) : (
         <>
           {/* Timeline View */}
-          <div className="relative pl-10">
-            {/* Vertical Timeline Line - Positioned absolutely to ensure perfect centering */}
-            <div className="absolute left-3 top-0 bottom-0 w-0.5 bg-purple-200 dark:bg-purple-900"></div>
+          <div className="relative">
+            {/* Vertical Timeline Line */}
+            <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-purple-200 dark:bg-purple-900"></div>
             
             {paginatedItems.map((item, index) => (
-              <div key={item.id} className="mb-8 relative">
-                {/* Timeline Dot - Perfectly centered on the vertical line */}
-                <div className="absolute left-3 top-0 transform -translate-x-1/2">
+              <div key={item.id} className="mb-8 relative pl-16 pb-2">
+                {/* Timeline Dot */}
+                <div className="absolute left-6 top-0 transform -translate-x-1/2">
                   <div className={`w-6 h-6 rounded-full flex items-center justify-center ${item.status === 'Draft' ? 'bg-slate-200 dark:bg-slate-700' : 'bg-purple-100 dark:bg-purple-900/50'}`}>
                     <Check size={14} className={item.status === 'Draft' ? 'text-slate-500 dark:text-slate-400' : 'text-purple-600 dark:text-purple-400'} />
                   </div>
@@ -167,7 +167,7 @@ export function HistoryView() {
                 <div className="flex items-center text-xs text-slate-500 dark:text-slate-400 mb-2">
                   <Calendar size={12} className="mr-1.5" />
                   <span>{item.date} • {item.time}</span>
-                  <div className="flex ml-2 gap-1">
+                  <div className="ml-auto flex gap-1">
                     <Badge variant={item.status === 'Generated' ? 'default' : 'outline'} className={item.status === 'Generated' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 hover:bg-green-100' : 'border-amber-300 text-amber-600 dark:border-amber-700 dark:text-amber-400'}>
                       {item.status}
                     </Badge>
@@ -190,10 +190,10 @@ export function HistoryView() {
                       <p className="text-sm text-slate-600 dark:text-slate-300">{item.description}</p>
                     </div>
                     <div className="flex space-x-1">
-                      <button className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                      <button className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Copy to clipboard">
                         <Copy size={16} />
                       </button>
-                      <button className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                      <button className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Expand">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
                       </button>
                     </div>
