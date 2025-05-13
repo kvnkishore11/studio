@@ -1,8 +1,8 @@
 "use client";
 
-import { AppLayout } from '@/components/layout/app-layout';
+import { AppLayout } from '@/components/layout/app-layout.jsx';
 import { NewStoryDialog } from '@/components/dialogs/new-story-dialog.jsx';
-import { NotificationsPanel } from '@/components/dialogs/notifications-panel';
+import { NotificationsPanel } from '@/components/dialogs/notifications-panel.jsx';
 import { useApp } from '@/hooks/use-app.js';
 
 /**
