@@ -263,6 +263,23 @@ h1, h2, h3, h4, h5, h6 {
   animation: draw-check 1.5s ease-out forwards;
 }
 
+/* Fade in animation for text */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+  opacity: 0;
+}
+
 .animation-delay-300 {
   animation-delay: 0.3s;
 }
