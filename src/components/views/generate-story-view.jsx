@@ -5,9 +5,7 @@ import { Zap, ArrowRight, BookOpen, Check, Users, ShoppingCart, Search, Bell, Sh
 import { Button } from '@/components/ui/button';
 import { useApp } from '@/hooks/use-app';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import Image from 'next/image';
 
 // Mock data for example stories
 const exampleStories = [
@@ -123,116 +121,140 @@ export function GenerateStoryView() {
 
   return (
     <div className="h-full flex flex-col space-y-8 animate-fadeIn">
-      <div className="relative text-center max-w-5xl mx-auto pt-0 pb-2">
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tighter text-foreground">
-          <span className="bg-clip-text text-transparent bg-gradient-to-br from-primary via-accent to-purple-600 dark:to-purple-400">
-            AI-Powered User Stories
-          </span>
-        </h1>
-        <p className="text-lg md:text-xl font-normal mb-6 max-w-2xl mx-auto text-muted-foreground">
-          Effortlessly transform your feature ideas into comprehensive user stories, complete with acceptance criteria, in mere seconds. Just describe your vision, and let our intelligent AI craft the narrative.
-        </p>
-        
-        <div className="flex justify-center mt-4 mb-0 md:mb-2">
-          <Button 
-            size="lg"
-            className="px-10 py-6 text-lg font-semibold btn-hover-effect shadow-2xl shadow-primary/20 hover:shadow-primary/40 transition-all duration-300 hover:scale-105 relative z-20"
-            onClick={openNewStoryDialog}
-          >
-            <Zap size={22} className="mr-3" />
-            Generate Your First Story
-          </Button>
-        </div>
-
-        {/* Animated Story Cards */}
-        <div className="relative h-[400px] mt-8 mb-4 overflow-visible flex justify-center items-center">
-          {exampleStories.map((story, index) => {
-            // Calculate position based on index relative to active index
-            const position = (index - activeStoryIndex + exampleStories.length) % exampleStories.length;
-            const isActive = position === 0;
-            const zIndex = exampleStories.length - position;
+      <div className="relative max-w-7xl mx-auto pt-0 pb-2 px-4">
+        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 mb-16">
+          {/* Left side - Title and description */}
+          <div className="w-full lg:w-1/2 text-left lg:pr-8">
+            <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tighter text-foreground leading-tight">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-teal-500 to-purple-600 dark:from-blue-400 dark:via-teal-400 dark:to-purple-500">
+                AI-Powered User Stories
+              </span>
+            </h1>
+            <p className="text-lg md:text-xl font-normal mb-8 text-muted-foreground leading-relaxed">
+              Effortlessly transform your feature ideas into comprehensive user stories, complete with acceptance criteria, in mere seconds. Just describe your vision, and let our intelligent AI craft the narrative.
+            </p>
             
-            // Different styles based on position
-            let cardStyles = {};
-            let opacity = 1;
-            
-            if (position === 0) { // Active card (front)
-              cardStyles = { transform: 'translateY(0) scale(1)', zIndex: 10 };
-            } else if (position === 1) { // First card behind
-              cardStyles = { transform: 'translateY(20px) translateX(40px) scale(0.95) rotate(2deg)', zIndex: 9 };
-              opacity = 0.9;
-            } else if (position === 2) { // Second card behind
-              cardStyles = { transform: 'translateY(40px) translateX(80px) scale(0.9) rotate(4deg)', zIndex: 8 };
-              opacity = 0.8;
-            } else if (position === exampleStories.length - 1) { // Last card (will animate to front)
-              cardStyles = { transform: 'translateY(60px) translateX(-80px) scale(0.85) rotate(-4deg)', zIndex: 7 };
-              opacity = 0.7;
-            } else if (position === exampleStories.length - 2) { // Second to last card
-              cardStyles = { transform: 'translateY(40px) translateX(-40px) scale(0.9) rotate(-2deg)', zIndex: 6 };
-              opacity = 0.6;
-            } else {
-              // Hide other cards
-              cardStyles = { transform: 'translateY(80px) scale(0.8)', zIndex: 1 };
-              opacity = 0;
-            }
-            
-            const IconComponent = story.icon;
-            
-            return (
-              <div 
-                key={index}
-                className={`absolute w-[360px] transition-all duration-700 ease-in-out ${isActive ? 'shadow-2xl' : 'shadow-xl'}`}
-                style={{ ...cardStyles, opacity }}
+            <div className="flex mt-4 mb-8">
+              <Button 
+                size="lg"
+                className="px-10 py-6 text-lg font-semibold btn-hover-effect shadow-2xl shadow-primary/20 hover:shadow-primary/40 transition-all duration-300 hover:scale-105 relative z-20 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                onClick={openNewStoryDialog}
               >
-                <div className={`bg-card rounded-2xl overflow-hidden border border-border ${isActive ? 'animate-pulse-subtle' : ''}`}>
-                  <div className={`h-2 w-full bg-gradient-to-r ${getColorClass(story.color)}`}></div>
-                  <div className="p-5">
-                    <div className="flex items-start mb-4">
-                      <div className={`p-2 rounded-full mr-3 ${story.color === 'blue' ? 'bg-blue-100 dark:bg-blue-900/30' : 
-                        story.color === 'purple' ? 'bg-purple-100 dark:bg-purple-900/30' : 
-                        story.color === 'green' ? 'bg-green-100 dark:bg-green-900/30' : 
-                        story.color === 'orange' ? 'bg-orange-100 dark:bg-orange-900/30' : 
-                        story.color === 'pink' ? 'bg-pink-100 dark:bg-pink-900/30' : 
-                        story.color === 'amber' ? 'bg-amber-100 dark:bg-amber-900/30' : 
-                        'bg-primary-100 dark:bg-primary-900/30'}`}>
-                        <IconComponent className={`h-5 w-5 ${story.color === 'blue' ? 'text-blue-500 dark:text-blue-400' : 
-                        story.color === 'purple' ? 'text-purple-500 dark:text-purple-400' : 
-                        story.color === 'green' ? 'text-green-500 dark:text-green-400' : 
-                        story.color === 'orange' ? 'text-orange-500 dark:text-orange-400' : 
-                        story.color === 'pink' ? 'text-pink-500 dark:text-pink-400' : 
-                        story.color === 'amber' ? 'text-amber-500 dark:text-amber-400' : 
-                        'text-primary dark:text-primary-400'}`} />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-lg">{story.title}</h3>
-                        <p className="text-sm text-muted-foreground">{story.story}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-2 mt-4">
-                      {story.criteria.map((criterion, i) => (
-                        <div key={i} className="flex items-center">
-                          <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mr-2">
-                            <Check className="h-3 w-3 text-primary" />
+                <Zap size={22} className="mr-3" />
+                Generate Your First Story
+              </Button>
+            </div>
+            
+            <div className="flex items-center space-x-2 text-sm text-muted-foreground mt-4">
+              <Check className="h-4 w-4 text-green-500" />
+              <span>Generate stories in seconds</span>
+            </div>
+            <div className="flex items-center space-x-2 text-sm text-muted-foreground mt-2">
+              <Check className="h-4 w-4 text-green-500" />
+              <span>Includes acceptance criteria</span>
+            </div>
+            <div className="flex items-center space-x-2 text-sm text-muted-foreground mt-2">
+              <Check className="h-4 w-4 text-green-500" />
+              <span>Save and organize your stories</span>
+            </div>
+          </div>
+          
+          {/* Right side - Animated Story Cards */}
+          <div className="w-full lg:w-1/2 relative">
+            <div className="relative h-[450px] overflow-visible flex justify-center items-center">
+              {exampleStories.map((story, index) => {
+                // Calculate position based on index relative to active index
+                const position = (index - activeStoryIndex + exampleStories.length) % exampleStories.length;
+                const isActive = position === 0;
+                const zIndex = exampleStories.length - position;
+                
+                // Different styles based on position
+                let cardStyles = {};
+                let opacity = 1;
+                
+                if (position === 0) { // Active card (front)
+                  cardStyles = { transform: 'translateY(0) scale(1)', zIndex: 10 };
+                } else if (position === 1) { // First card behind
+                  cardStyles = { transform: 'translateY(20px) translateX(40px) scale(0.95) rotate(2deg)', zIndex: 9 };
+                  opacity = 0.9;
+                } else if (position === 2) { // Second card behind
+                  cardStyles = { transform: 'translateY(40px) translateX(80px) scale(0.9) rotate(4deg)', zIndex: 8 };
+                  opacity = 0.8;
+                } else if (position === exampleStories.length - 1) { // Last card (will animate to front)
+                  cardStyles = { transform: 'translateY(60px) translateX(-80px) scale(0.85) rotate(-4deg)', zIndex: 7 };
+                  opacity = 0.7;
+                } else if (position === exampleStories.length - 2) { // Second to last card
+                  cardStyles = { transform: 'translateY(40px) translateX(-40px) scale(0.9) rotate(-2deg)', zIndex: 6 };
+                  opacity = 0.6;
+                } else {
+                  // Hide other cards
+                  cardStyles = { transform: 'translateY(80px) scale(0.8)', zIndex: 1 };
+                  opacity = 0;
+                }
+                
+                const IconComponent = story.icon;
+                
+                return (
+                  <div 
+                    key={index}
+                    className={`absolute w-[360px] transition-all duration-700 ease-in-out ${isActive ? 'shadow-2xl' : 'shadow-xl'}`}
+                    style={{ ...cardStyles, opacity }}
+                  >
+                    <div className={`bg-card rounded-2xl overflow-hidden border border-border ${isActive ? 'animate-pulse-subtle' : ''}`}>
+                      <div className={`h-2 w-full bg-gradient-to-r ${getColorClass(story.color)}`}></div>
+                      <div className="p-5">
+                        <div className="flex items-start mb-4">
+                          <div className={`p-2 rounded-full mr-3 ${
+                            story.color === 'blue' ? 'bg-blue-100 dark:bg-blue-900/30' : 
+                            story.color === 'purple' ? 'bg-purple-100 dark:bg-purple-900/30' : 
+                            story.color === 'green' ? 'bg-green-100 dark:bg-green-900/30' : 
+                            story.color === 'orange' ? 'bg-orange-100 dark:bg-orange-900/30' : 
+                            story.color === 'pink' ? 'bg-pink-100 dark:bg-pink-900/30' : 
+                            story.color === 'amber' ? 'bg-amber-100 dark:bg-amber-900/30' : 
+                            'bg-primary-100 dark:bg-primary-900/30'
+                          }`}>
+                            <IconComponent className={`h-5 w-5 ${
+                              story.color === 'blue' ? 'text-blue-500 dark:text-blue-400' : 
+                              story.color === 'purple' ? 'text-purple-500 dark:text-purple-400' : 
+                              story.color === 'green' ? 'text-green-500 dark:text-green-400' : 
+                              story.color === 'orange' ? 'text-orange-500 dark:text-orange-400' : 
+                              story.color === 'pink' ? 'text-pink-500 dark:text-pink-400' : 
+                              story.color === 'amber' ? 'text-amber-500 dark:text-amber-400' : 
+                              'text-primary dark:text-primary-400'
+                            }`} />
                           </div>
-                          <span className="text-sm">{criterion}</span>
+                          <div>
+                            <h3 className="font-semibold text-lg">{story.title}</h3>
+                            <p className="text-sm text-muted-foreground">{story.story}</p>
+                          </div>
                         </div>
-                      ))}
-                    </div>
-                    
-                    <div className="mt-4 pt-3 border-t flex justify-between items-center">
-                      <Badge variant="outline" className="text-xs">{story.date}</Badge>
-                      <span className="text-xs text-muted-foreground">Generated in 2.3 seconds</span>
+                        
+                        <div className="space-y-2 mt-4">
+                          {story.criteria.map((criterion, i) => (
+                            <div key={i} className="flex items-center">
+                              <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center mr-2">
+                                <Check className="h-3 w-3 text-primary" />
+                              </div>
+                              <span className="text-sm">{criterion}</span>
+                            </div>
+                          ))}
+                        </div>
+                        
+                        <div className="mt-4 pt-3 border-t flex justify-between items-center">
+                          <Badge variant="outline" className="text-xs">{story.date}</Badge>
+                          <span className="text-xs text-muted-foreground">Generated in 2.3 seconds</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            );
-          })}
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
       
-      <section className="py-0 mt-48 pt-20 animate-slideUp delay-100">
+      <section className="py-0 mt-16 pt-8 animate-slideUp delay-100">
         <h2 className="text-3xl font-bold text-center mb-4 text-foreground">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">How It Works</span>
         </h2>
@@ -340,4 +362,4 @@ export function GenerateStoryView() {
       </div>
     </div>
   );
-} 
+}
