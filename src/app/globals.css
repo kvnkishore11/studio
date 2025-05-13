@@ -22,6 +22,7 @@ h1, h2, h3, h4, h5, h6 {
     --popover: 0 0% 100%;
     --popover-foreground: 224 39% 20%;
     --primary: 231 48% 48%; /* Deep Indigo #3F51B5 */
+    --primary-rgb: 63, 81, 181; /* RGB values for Deep Indigo #3F51B5 */
     --primary-foreground: 0 0% 100%; /* White */
     --secondary: 70 73% 86%; /* Soft Lavender #E6EE9C (light greenish yellow) */
     --secondary-foreground: 70 30% 25%; /* Dark text for Soft Lavender */
@@ -61,6 +62,7 @@ h1, h2, h3, h4, h5, h6 {
     --popover: 222 39% 16%;
     --popover-foreground: 210 40% 98%;
     --primary: 231 60% 70%; /* Lighter Indigo for dark mode */
+    --primary-rgb: 125, 135, 235; /* RGB values for Lighter Indigo */
     --primary-foreground: 231 48% 15%; /* Dark Indigo for text */
     --secondary: 70 40% 20%; /* Darker Soft Lavender hue */
     --secondary-foreground: 70 73% 80%; /* Lighter text on dark secondary */
@@ -199,6 +201,69 @@ h1, h2, h3, h4, h5, h6 {
 .animate-ai-progress-bar {
   animation: ai-progress-bar 1.5s ease-in-out infinite;
 }
+
+/* CSS Animations to replace Framer Motion */
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slideUp {
+  animation: slideInUp 0.6s ease-out forwards;
+}
+
+.animate-slideUp.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.animate-slideUp.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animate-slideUp.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animate-slideLeft {
+  animation: slideInLeft 0.6s ease-out forwards;
+}
+
+.animate-slideRight {
+  animation: slideInRight 0.6s ease-out forwards;
+}
+
+.animate-zoomIn {
+  animation: zoomIn 0.5s ease-out forwards;
+}
+
+/* Button hover effect */
+.btn-hover-effect {
+  transition: all 0.3s ease;
+}
+
+.btn-hover-effect:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(var(--primary-rgb), 0.4);
+}
+
+/* Card hover effect */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Staggered animation for children */
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.7s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.8s; }
 
 @keyframes tick-emphasis {
   0% { transform: scale(0.8) rotate(-10deg); opacity: 0.7; }
