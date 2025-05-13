@@ -2,7 +2,10 @@
 "use client";
 
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { AnimatedDialog, AnimatedDialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/animated-dialog";
+import { DialogClose } from "@/components/ui/dialog";
+import { motion, AnimatePresence } from "framer-motion";
+import { fadeVariants, slideUpVariants, staggerContainer, listItemVariants } from "@/lib/animation-utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -176,8 +179,8 @@ export function NewStoryDialog() {
   };
 
   return (
-    <Dialog open={isNewStoryDialogOpen} onOpenChange={(open) => !open && handleDialogClose()}>
-      <DialogContent className={cn(
+    <AnimatedDialog open={isNewStoryDialogOpen} onOpenChange={(open) => !open && handleDialogClose()}>
+      <AnimatedDialogContent className={cn(
         "max-w-2xl w-full rounded-2xl shadow-2xl p-0 overflow-hidden",
         themeMode === 'light' ? "bg-card" : "bg-card"
       )}>
@@ -185,183 +188,234 @@ export function NewStoryDialog() {
           <DialogTitle className="text-2xl font-bold tracking-tight flex items-center">
             <Wand2 size={24} className="mr-3 text-primary" /> Create User Story
           </DialogTitle>
-           {/* Removed redundant DialogClose button as DialogContent provides one by default */}
         </DialogHeader>
         
         <div className="p-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
-          {!currentGeneratedStory ? (
-            <div className="animate-fadeIn">
-              <div className="mb-6">
-                <Label htmlFor="storyTitle" className="block text-sm font-medium mb-2">Story Title</Label>
-                <Input 
-                  id="storyTitle"
-                  type="text" 
-                  placeholder="e.g., User Authentication System"
-                  value={storyTitle}
-                  onChange={(e) => setStoryTitle(e.target.value)}
-                  className="py-3 px-4 text-base"
-                />
-              </div>
-              
-              <div className="mb-8">
-                <Label htmlFor="storyDescription" className="block text-sm font-medium mb-2">Brief Description</Label>
-                <Textarea 
-                  id="storyDescription"
-                  placeholder="Describe the feature in detail..."
-                  value={storyDescription}
-                  onChange={(e) => setStoryDescription(e.target.value)}
-                  className="min-h-36 py-3 px-4 text-base" // Increased min-height
-                  rows={5}
-                />
-              </div>
-              
-              {error ? (
-                <div className="mb-6 p-5 rounded-xl bg-destructive/10 border border-destructive/20">
-                  <div className="flex items-start">
-                    <div className="p-2.5 rounded-lg bg-destructive/20">
-                      <AlertCircle size={20} className="text-destructive" />
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="font-medium text-foreground">Error Generating Story</h4>
-                      <p className="text-sm mt-1 text-muted-foreground">
-                        {error.message}
-                      </p>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="mt-3 text-xs" 
-                        onClick={handleRetry}
-                        disabled={retryCount >= 3}
-                      >
-                        <RefreshCw size={14} className="mr-1" />
-                        {retryCount >= 3 ? 'Max retries reached' : 'Try Again'}
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <div className="mb-6 p-5 rounded-xl bg-gradient-to-r from-primary/5 via-accent/5 to-purple-500/5 dark:from-primary/10 dark:via-accent/10 dark:to-purple-500/10 border border-primary/20">
-                  <div className="flex items-start">
-                    <div className="p-2.5 rounded-lg bg-primary/10">
-                      <Cpu size={20} className="text-primary animate-icon-pulse" />
-                    </div>
-                    <div className="ml-4">
-                      <h4 className="font-medium text-foreground">AI Powered Story Generation</h4>
-                      <p className="text-sm mt-1 text-muted-foreground">
-                        Our AI will craft a complete user story with acceptance criteria and other crucial details.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              )}
-              
-              <DialogFooter className="mt-8 gap-2 sm:gap-0">
-                <DialogClose asChild>
-                  <Button variant="outline" className="px-6">Cancel</Button>
-                </DialogClose>
-                <Button 
-                  onClick={handleGenerate}
-                  disabled={!storyTitle.trim() || !storyDescription.trim() || isGenerating}
-                  className="px-8 btn-hover-effect text-base"
-                  size="lg"
-                >
-                  {isGenerating ? (
-                    <Loader2 size={20} className="mr-2 animate-spin" />
-                  ) : (
-                    <Zap size={20} className="mr-2" />
-                  )}
-                  Generate Story
-                </Button>
-              </DialogFooter>
-            </div>
-          ) : (
-            <div className="animate-fadeIn">
-              <div className="mb-6 p-5 rounded-xl bg-green-600/5 border border-green-600/20 text-green-700 dark:text-green-300">
-                <div className="flex items-start">
-                  <div className="p-2.5 rounded-lg bg-green-600/10">
-                    <Check size={20} className="text-green-600 dark:text-green-400" />
-                  </div>
-                  <div className="ml-4">
-                    <h4 className="font-medium text-foreground">Story Generated Successfully!</h4>
-                    <p className="text-sm mt-1 text-muted-foreground">
-                      Review your AI-generated user story below. You can regenerate or save it.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="space-y-6 mb-8">
-                <div className="animate-fadeIn" style={{ animationDelay: '0.1s' }}>
-                  <h3 className="text-lg font-semibold mb-2 text-foreground">User Story</h3>
-                  <div className="p-4 rounded-xl bg-muted/40 border border-border">
-                    <p className="text-foreground leading-relaxed">{currentGeneratedStory.userStory}</p>
-                  </div>
+          <AnimatePresence mode="wait">
+            {!currentGeneratedStory ? (
+              <motion.div 
+                key="input-form"
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={fadeVariants}
+                className="w-full"
+                transition={{
+                  duration: 0.3,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+              >
+                <div className="mb-6">
+                  <Label htmlFor="storyTitle" className="block text-sm font-medium mb-2">Story Title</Label>
+                  <Input 
+                    id="storyTitle"
+                    type="text" 
+                    placeholder="e.g., User Authentication System"
+                    value={storyTitle}
+                    onChange={(e) => setStoryTitle(e.target.value)}
+                    className="py-3 px-4 text-base"
+                  />
                 </div>
                 
-                <div className="animate-fadeIn" style={{ animationDelay: '0.2s' }}>
-                  <h3 className="text-lg font-semibold mb-2 text-foreground">Acceptance Criteria</h3>
-                  <div className="p-4 rounded-xl bg-muted/40 border border-border">
-                    <ul className="space-y-2.5">
-                      {currentGeneratedStory.acceptanceCriteria.map((criteria, index) => (
-                        <li key={index} className="flex items-start">
-                          <Check size={18} className="mt-0.5 mr-3 text-primary flex-shrink-0" />
-                          <span className="text-foreground leading-relaxed">{criteria}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                <div className="mb-8">
+                  <Label htmlFor="storyDescription" className="block text-sm font-medium mb-2">Brief Description</Label>
+                  <Textarea 
+                    id="storyDescription"
+                    placeholder="Describe the feature in detail..."
+                    value={storyDescription}
+                    onChange={(e) => setStoryDescription(e.target.value)}
+                    className="min-h-36 py-3 px-4 text-base"
+                    rows={5}
+                  />
                 </div>
-
-                <div className="animate-fadeIn" style={{ animationDelay: '0.3s' }}>
-                  <h3 className="text-lg font-semibold mb-2 text-foreground">Additional Details</h3>
-                  <div className="p-4 rounded-xl bg-muted/40 border border-border">
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-                      <div>
-                        <p className="text-xs text-muted-foreground uppercase tracking-wider">Priority</p>
-                        <p className="font-semibold text-foreground text-base">{currentGeneratedStory.priority}</p>
+                
+                {error ? (
+                  <motion.div 
+                    className="mb-6 p-5 rounded-xl bg-destructive/10 border border-destructive/20"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <div className="flex items-start">
+                      <div className="p-2.5 rounded-lg bg-destructive/20">
+                        <AlertCircle size={20} className="text-destructive" />
                       </div>
-                      <div>
-                        <p className="text-xs text-muted-foreground uppercase tracking-wider">Difficulty</p>
-                        <p className="font-semibold text-foreground text-base">{currentGeneratedStory.difficulty}</p>
-                      </div>
-                      <div>
-                        <p className="text-xs text-muted-foreground uppercase tracking-wider">Est. Time</p>
-                        <p className="font-semibold text-foreground text-base">{currentGeneratedStory.estimatedTime}</p>
+                      <div className="ml-4">
+                        <h4 className="font-medium text-foreground">Error Generating Story</h4>
+                        <p className="text-sm mt-1 text-muted-foreground">
+                          {error.message}
+                        </p>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="mt-3 text-xs" 
+                          onClick={handleRetry}
+                          disabled={retryCount >= 3}
+                        >
+                          <RefreshCw size={14} className="mr-1" />
+                          {retryCount >= 3 ? 'Max retries reached' : 'Try Again'}
+                        </Button>
                       </div>
                     </div>
-                    <p className="text-foreground leading-relaxed">{currentGeneratedStory.additionalNotes}</p>
-                  </div>
-                </div>
-              </div>
-              
-              <DialogFooter className="mt-8 flex flex-col sm:flex-row sm:justify-between items-center gap-4">
-                <div className="flex space-x-2">
-                  <Button variant="outline" onClick={handleEditInput} size="sm" className="px-4">
-                    <Edit3 size={16} className="mr-2" /> Edit Input
-                  </Button>
-                  <Button variant="outline" onClick={handleRegenerate} disabled={isGenerating} size="sm" className="px-4">
+                  </motion.div>
+                ) : (
+                  <motion.div 
+                    className="mb-6 p-5 rounded-xl bg-gradient-to-r from-primary/5 via-accent/5 to-purple-500/5 dark:from-primary/10 dark:via-accent/10 dark:to-purple-500/10 border border-primary/20"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <div className="flex items-start">
+                      <div className="p-2.5 rounded-lg bg-primary/10">
+                        <Cpu size={20} className="text-primary animate-icon-pulse" />
+                      </div>
+                      <div className="ml-4">
+                        <h4 className="font-medium text-foreground">AI Powered Story Generation</h4>
+                        <p className="text-sm mt-1 text-muted-foreground">
+                          Our AI will craft a complete user story with acceptance criteria and other crucial details.
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+                
+                <DialogFooter className="mt-8 gap-2 sm:gap-0">
+                  <DialogClose asChild>
+                    <Button variant="outline" className="px-6">Cancel</Button>
+                  </DialogClose>
+                  <Button 
+                    onClick={handleGenerate}
+                    disabled={!storyTitle.trim() || !storyDescription.trim() || isGenerating}
+                    className="px-8 btn-hover-effect text-base"
+                    size="lg"
+                  >
                     {isGenerating ? (
-                      <Loader2 size={16} className="mr-2 animate-spin" />
+                      <Loader2 size={20} className="mr-2 animate-spin" />
                     ) : (
-                      <RefreshCw size={16} className="mr-2" />
+                      <Zap size={20} className="mr-2" />
                     )}
-                    Regenerate
+                    Generate Story
                   </Button>
-                </div>
-                <Button onClick={handleSave} className="px-8 btn-hover-effect" size="lg">
-                  <Save size={18} className="mr-2" /> Save Story
-                </Button>
-              </DialogFooter>
-              
-              <div className="flex justify-center space-x-3 mt-8 pb-2 text-muted-foreground items-center">
+                </DialogFooter>
+              </motion.div>
+            ) : (
+              <motion.div 
+                key="generated-story"
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                variants={fadeVariants}
+                className="w-full"
+                transition={{
+                  duration: 0.3,
+                  ease: [0.22, 1, 0.36, 1]
+                }}
+              >
+                <motion.div 
+                  className="mb-6 p-5 rounded-xl bg-green-600/5 border border-green-600/20 text-green-700 dark:text-green-300"
+                  variants={slideUpVariants}
+                >
+                  <div className="flex items-start">
+                    <div className="p-2.5 rounded-lg bg-green-600/10">
+                      <Check size={20} className="text-green-600 dark:text-green-400" />
+                    </div>
+                    <div className="ml-4">
+                      <h4 className="font-medium text-foreground">Story Generated Successfully!</h4>
+                      <p className="text-sm mt-1 text-muted-foreground">
+                        Review your AI-generated user story below. You can regenerate or save it.
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+                
+                <motion.div 
+                  className="space-y-6 mb-8"
+                  variants={staggerContainer(0.1)}
+                >
+                  <motion.div variants={slideUpVariants}>
+                    <h3 className="text-lg font-semibold mb-2 text-foreground">User Story</h3>
+                    <div className="p-4 rounded-xl bg-muted/40 border border-border">
+                      <p className="text-foreground leading-relaxed">{currentGeneratedStory.userStory}</p>
+                    </div>
+                  </motion.div>
+                  
+                  <motion.div variants={slideUpVariants}>
+                    <h3 className="text-lg font-semibold mb-2 text-foreground">Acceptance Criteria</h3>
+                    <div className="p-4 rounded-xl bg-muted/40 border border-border">
+                      <motion.ul 
+                        className="space-y-2.5"
+                        variants={staggerContainer(0.05)}
+                        initial="hidden"
+                        animate="visible"
+                      >
+                        {currentGeneratedStory.acceptanceCriteria.map((criteria, index) => (
+                          <motion.li 
+                            key={index} 
+                            className="flex items-start"
+                            variants={listItemVariants}
+                          >
+                            <Check size={18} className="mt-0.5 mr-3 text-primary flex-shrink-0" />
+                            <span className="text-foreground leading-relaxed">{criteria}</span>
+                          </motion.li>
+                        ))}
+                      </motion.ul>
+                    </div>
+                  </motion.div>
+
+                  <motion.div variants={slideUpVariants}>
+                    <h3 className="text-lg font-semibold mb-2 text-foreground">Additional Details</h3>
+                    <div className="p-4 rounded-xl bg-muted/40 border border-border">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                        <div>
+                          <p className="text-xs text-muted-foreground uppercase tracking-wider">Priority</p>
+                          <p className="font-semibold text-foreground text-base">{currentGeneratedStory.priority}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground uppercase tracking-wider">Difficulty</p>
+                          <p className="font-semibold text-foreground text-base">{currentGeneratedStory.difficulty}</p>
+                        </div>
+                        <div>
+                          <p className="text-xs text-muted-foreground uppercase tracking-wider">Est. Time</p>
+                          <p className="font-semibold text-foreground text-base">{currentGeneratedStory.estimatedTime}</p>
+                        </div>
+                      </div>
+                      <p className="text-foreground leading-relaxed">{currentGeneratedStory.additionalNotes}</p>
+                    </div>
+                  </motion.div>
+                </motion.div>
+                
+                <DialogFooter className="mt-8 flex flex-col sm:flex-row sm:justify-between items-center gap-4">
+                  <div className="flex space-x-2">
+                    <Button variant="outline" onClick={handleEditInput} size="sm" className="px-4">
+                      <Edit3 size={16} className="mr-2" /> Edit Input
+                    </Button>
+                    <Button variant="outline" onClick={handleRegenerate} disabled={isGenerating} size="sm" className="px-4">
+                      {isGenerating ? (
+                        <Loader2 size={16} className="mr-2 animate-spin" />
+                      ) : (
+                        <RefreshCw size={16} className="mr-2" />
+                      )}
+                      Regenerate
+                    </Button>
+                  </div>
+                  <Button onClick={handleSave} className="px-8 btn-hover-effect" size="lg">
+                    <Save size={18} className="mr-2" /> Save Story
+                  </Button>
+                </DialogFooter>
+                
+                <motion.div 
+                  className="flex justify-center space-x-3 mt-8 pb-2 text-muted-foreground items-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                >
                   <p className="text-sm mr-2">Rate this generation:</p>
                   <Button variant="ghost" size="icon" className="hover:text-green-500 rounded-full hover:bg-green-500/10"><ThumbsUp size={18} /></Button>
                   <Button variant="ghost" size="icon" className="hover:text-red-500 rounded-full hover:bg-red-500/10"><ThumbsDown size={18} /></Button>
-              </div>
-            </div>
-          )}
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-      </DialogContent>
-    </Dialog>
+      </AnimatedDialogContent>
+    </AnimatedDialog>
   );
 }

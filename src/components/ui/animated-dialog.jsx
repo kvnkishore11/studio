@@ -38,34 +38,6 @@ const AnimatedDialogBackdrop = React.forwardRef(({ className, variants = backdro
 AnimatedDialogBackdrop.displayName = "AnimatedDialogBackdrop";
 
 /**
- * Animated dialog content
- */
-const AnimatedDialogContent = React.forwardRef(({ className, children, variants = dialogVariants, ...props }, ref) => {
-  // Check if the user prefers reduced motion
-  const prefersReducedMotion = useReducedMotion();
-  
-  // Use reduced motion variants if the user prefers reduced motion
-  const effectiveVariants = prefersReducedMotion ? reducedMotionVariants : variants;
-  
-  return (
-  <motion.div
-    ref={ref}
-    className={cn(
-      "fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 sm:rounded-lg",
-      className
-    )}
-    initial="hidden"
-    animate="visible"
-    exit="exit"
-    variants={effectiveVariants}
-    {...props}
-  >
-    {children}
-  </motion.div>);
-});
-AnimatedDialogContent.displayName = "AnimatedDialogContent";
-
-/**
  * An enhanced Dialog component with animations
  * 
  * @param {Object} props - Component props
@@ -81,13 +53,20 @@ export function AnimatedDialog({
   onOpenChange,
   children,
   contentVariants = dialogVariants,
-  backdropVariants = backdropVariants,
+  backdropVariants: customBackdropVariants = backdropVariants,
   ...dialogProps
 }) {
+  // Check if the user prefers reduced motion
+  const prefersReducedMotion = useReducedMotion();
+  
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {open && (
         <Dialog open={open} onOpenChange={onOpenChange} {...dialogProps}>
+          <AnimatedDialogBackdrop 
+            variants={customBackdropVariants}
+            onClick={() => onOpenChange?.(false)}
+          />
           {children}
         </Dialog>
       )}
@@ -97,6 +76,7 @@ export function AnimatedDialog({
 
 /**
  * Animated dialog content with customizable animations
+ * This component wraps DialogContent with motion animations
  */
 export function AnimatedDialogContent({
   className,
@@ -109,6 +89,7 @@ export function AnimatedDialogContent({
   
   // Use reduced motion variants if the user prefers reduced motion
   const effectiveVariants = prefersReducedMotion ? reducedMotionVariants : variants;
+  
   return (
     <DialogContent className={cn("p-0 border-none bg-transparent shadow-none", className)} {...props} asChild>
       <motion.div
@@ -117,8 +98,17 @@ export function AnimatedDialogContent({
         animate="visible"
         exit="exit"
         variants={effectiveVariants}
+        transition={{
+          type: prefersReducedMotion ? "tween" : "spring",
+          stiffness: 300,
+          damping: 30,
+          duration: prefersReducedMotion ? 0.15 : 0.3
+        }}
+        layout
       >
-        {children}
+        <AnimatePresence mode="wait">
+          {children}
+        </AnimatePresence>
       </motion.div>
     </DialogContent>
   );

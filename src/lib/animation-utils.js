@@ -326,12 +326,18 @@ export const buttonVariants = {
 export const dialogVariants = {
   hidden: { 
     opacity: 0,
-    scale: 0.95
+    scale: 0.95,
+    y: 10
   },
   visible: { 
     opacity: 1,
     scale: 1,
+    y: 0,
     transition: { 
+      type: "spring",
+      stiffness: 300,
+      damping: 30,
+      mass: 1,
       duration: duration.normal,
       ease: easing.spring
     }
@@ -339,6 +345,7 @@ export const dialogVariants = {
   exit: { 
     opacity: 0,
     scale: 0.95,
+    y: 10,
     transition: { 
       duration: duration.fast,
       ease: easing.easeOut
@@ -364,7 +371,7 @@ export const backdropVariants = {
     transition: { 
       duration: duration.fast,
       ease: easing.easeOut,
-      delay: 0.1 // Small delay to ensure modal exits first
+      delay: 0.05 // Small delay to ensure modal exits first
     }
   }
 };
