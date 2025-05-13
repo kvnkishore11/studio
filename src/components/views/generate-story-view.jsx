@@ -311,13 +311,13 @@ export function GenerateStoryView() {
                 </div>
                 
                 {/* Title */}
-                <h3 className="text-purple-500 dark:text-purple-400 text-sm font-medium mb-5 text-center">
+                <h3 className="text-purple-500 dark:text-purple-400 text-sm font-medium mb-2 text-center">
                   2. AI Generates Story
                 </h3>
                 
                 {/* Content */}
-                <div className="w-full flex flex-col items-center flex-grow justify-center">
-                  <div className="text-purple-500 dark:text-purple-400 text-3xl mb-3 font-light opacity-0">T</div>
+                <div className="w-full flex flex-col items-center flex-grow justify-center mt-0">
+                  <div className="hidden">T</div>
                   <div className="w-full max-w-[160px] mx-auto space-y-3 mb-4">
                     <div className="h-2 w-full relative overflow-hidden">
                       <div className="absolute left-0 top-0 h-full bg-purple-400 dark:bg-purple-500 rounded-full animate-slide-right"></div>
@@ -351,13 +351,13 @@ export function GenerateStoryView() {
                 </div>
                 
                 {/* Title */}
-                <h3 className="text-green-500 dark:text-green-400 text-sm font-medium mb-5 text-center">
+                <h3 className="text-green-500 dark:text-green-400 text-sm font-medium mb-2 text-center">
                   3. Review &amp; Save
                 </h3>
                 
                 {/* Content */}
-                <div className="w-full flex flex-col items-center flex-grow justify-center">
-                  <div className="text-green-500 dark:text-green-400 text-3xl mb-3 font-light opacity-0">T</div>
+                <div className="w-full flex flex-col items-center flex-grow justify-center mt-0">
+                  <div className="hidden">T</div>
                   <div className="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/20 flex items-center justify-center mb-3 animate-check-appear">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-green-500 dark:text-green-400 animate-draw-check-loop"><polyline points="20 6 9 17 4 12"></polyline></svg>
                   </div>
