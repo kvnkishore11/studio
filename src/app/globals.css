@@ -188,12 +188,40 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0;
 }
 
+@keyframes typing-line {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+    opacity: 1;
+  }
+}
+
+.animate-typing-line {
+  animation: typing-line 2s ease-out forwards;
+  width: 0;
+  opacity: 0;
+}
+
 .animation-delay-300 {
   animation-delay: 0.3s;
 }
 
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
 .animation-delay-600 {
   animation-delay: 0.6s;
+}
+
+.animation-delay-800 {
+  animation-delay: 0.8s;
 }
 
 @keyframes check-appear {
