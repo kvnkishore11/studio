@@ -3,20 +3,20 @@
  * @fileOverview AI agent that generates a user story, acceptance criteria, and additional details from a title and description.
  *
  * - generateUserStory - A function that handles the user story generation process.
- * - GenerateUserStoryInput - The input type for the generateUserStory function.
- * - GenerateUserStoryOutput - The return type for the generateUserStory function.
+ * - GenerateUserStoryInputSchema - Zod schema for the input.
+ * - GenerateUserStoryOutputSchema - Zod schema for the output.
  */
 
-import {ai} from '@/ai/genkit';
+import {ai} from '@/ai/genkit.js'; // Updated import path
 import {z} from 'genkit';
 
-const GenerateUserStoryInputSchema = z.object({
+export const GenerateUserStoryInputSchema = z.object({
   title: z.string().describe('The title of the feature.'),
   description: z.string().describe('A brief description of the feature.'),
 });
-export type GenerateUserStoryInput = z.infer<typeof GenerateUserStoryInputSchema>;
+// Removed TS type export: GenerateUserStoryInput
 
-const GenerateUserStoryOutputSchema = z.object({
+export const GenerateUserStoryOutputSchema = z.object({
   userStory: z.string().describe('A complete user story.'),
   acceptanceCriteria: z.array(z.string()).describe('Acceptance criteria for the user story.'),
   additionalNotes: z.string().describe('Additional notes or details about the feature.'),
@@ -24,9 +24,14 @@ const GenerateUserStoryOutputSchema = z.object({
   priority: z.enum(['High', 'Medium', 'Low']).describe('The priority of the feature.'),
   estimatedTime: z.string().describe('Estimated time to complete the feature.'),
 });
-export type GenerateUserStoryOutput = z.infer<typeof GenerateUserStoryOutputSchema>;
+// Removed TS type export: GenerateUserStoryOutput
 
-export async function generateUserStory(input: GenerateUserStoryInput): Promise<GenerateUserStoryOutput> {
+/**
+ * Generates a user story based on the provided input.
+ * @param {z.infer<GenerateUserStoryInputSchema>} input - The input data matching the schema.
+ * @returns {Promise<z.infer<GenerateUserStoryOutputSchema>>} The generated user story data.
+ */
+export async function generateUserStory(input) {
   return generateUserStoryFlow(input);
 }
 
@@ -59,6 +64,8 @@ const generateUserStoryFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await prompt(input);
-    return output!;
+    // Assuming output is guaranteed by Genkit if no error is thrown
+    // If output could be null/undefined, add appropriate checks.
+    return output;
   }
-);
+); 

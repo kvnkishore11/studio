@@ -3,30 +3,35 @@
  * @fileOverview Regenerates a user story based on the provided title and description.
  *
  * - regenerateUserStory - A function that regenerates a user story.
- * - RegenerateUserStoryInput - The input type for the regenerateUserStory function.
- * - RegenerateUserStoryOutput - The return type for the regenerateUserStory function.
+ * - RegenerateUserStoryInputSchema - Zod schema for the input.
+ * - RegenerateUserStoryOutputSchema - Zod schema for the output.
  */
 
-import {ai} from '@/ai/genkit';
+import {ai} from '@/ai/genkit.js'; // Updated import path
 import {z} from 'genkit';
 
-const RegenerateUserStoryInputSchema = z.object({
+export const RegenerateUserStoryInputSchema = z.object({
   title: z.string().describe('The title of the user story.'),
   description: z.string().describe('A brief description of the user story.'),
 });
-export type RegenerateUserStoryInput = z.infer<typeof RegenerateUserStoryInputSchema>;
+// Removed TS type export: RegenerateUserStoryInput
 
-const RegenerateUserStoryOutputSchema = z.object({
+export const RegenerateUserStoryOutputSchema = z.object({
   userStory: z.string().describe('The generated user story.'),
   acceptanceCriteria: z.array(z.string()).describe('Acceptance criteria for the user story.'),
   additionalNotes: z.string().describe('Additional notes or details for the user story.'),
-  difficulty: z.string().describe('The difficulty level of the user story.'),
-  priority: z.string().describe('The priority of the user story.'),
+  difficulty: z.string().describe('The difficulty level of the user story.'), // Consider z.enum like in generate-user-story
+  priority: z.string().describe('The priority of the user story.'), // Consider z.enum like in generate-user-story
   estimatedTime: z.string().describe('The estimated time to complete the user story.'),
 });
-export type RegenerateUserStoryOutput = z.infer<typeof RegenerateUserStoryOutputSchema>;
+// Removed TS type export: RegenerateUserStoryOutput
 
-export async function regenerateUserStory(input: RegenerateUserStoryInput): Promise<RegenerateUserStoryOutput> {
+/**
+ * Regenerates a user story based on the provided input.
+ * @param {z.infer<RegenerateUserStoryInputSchema>} input - The input data matching the schema.
+ * @returns {Promise<z.infer<RegenerateUserStoryOutputSchema>>} The regenerated user story data.
+ */
+export async function regenerateUserStory(input) {
   return regenerateUserStoryFlow(input);
 }
 
@@ -54,6 +59,7 @@ const regenerateUserStoryFlow = ai.defineFlow(
   },
   async input => {
     const {output} = await regenerateUserStoryPrompt(input);
-    return output!;
+    // Assuming output is guaranteed by Genkit if no error is thrown
+    return output;
   }
-);
+); 
