@@ -13,7 +13,21 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 export function SavedStoriesView() {
-  const { savedStories, openNewStoryDialog, removeSavedStory, themeMode } = useApp();
+  // Safely try to use the useApp hook, but provide fallback values if it fails
+  let appContext = { 
+    savedStories: [],
+    openNewStoryDialog: () => console.warn('AppProvider not found'),
+    removeSavedStory: () => console.warn('AppProvider not found'),
+    themeMode: 'light'
+  };
+  
+  try {
+    appContext = useApp();
+  } catch (error) {
+    console.warn('SavedStoriesView: AppProvider not found in context, using default values');
+  }
+  
+  const { savedStories, openNewStoryDialog, removeSavedStory, themeMode } = appContext;
   const [searchQuery, setSearchQuery] = useState('');
   const [activePriorityFilter, setActivePriorityFilter] = useState('all');
   const [sortOrder, setSortOrder] = useState('newest');

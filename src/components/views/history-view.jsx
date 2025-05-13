@@ -8,7 +8,19 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 export function HistoryView() {
-  const { historyItems, themeMode } = useApp();
+  // Safely try to use the useApp hook, but provide fallback values if it fails
+  let appContext = { 
+    historyItems: [],
+    themeMode: 'light'
+  };
+  
+  try {
+    appContext = useApp();
+  } catch (error) {
+    console.warn('HistoryView: AppProvider not found in context, using default values');
+  }
+  
+  const { historyItems, themeMode } = appContext;
 
   return (
     <div className="animate-fadeIn">
