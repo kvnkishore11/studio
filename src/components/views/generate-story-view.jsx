@@ -275,12 +275,12 @@ export function GenerateStoryView() {
                 </div>
                 
                 {/* Title */}
-                <h3 className="text-blue-500 dark:text-blue-400 text-sm font-medium mb-5 text-center">
+                <h3 className="text-blue-500 dark:text-blue-400 text-sm font-medium mb-2 text-center">
                   1. Describe Your Feature
                 </h3>
                 
                 {/* Content */}
-                <div className="w-full flex flex-col items-center flex-grow justify-center">
+                <div className="w-full flex flex-col items-center flex-grow justify-center mt-0">
                   <div className="text-blue-500 dark:text-blue-400 text-3xl mb-3 font-light">
                     T
                   </div>
